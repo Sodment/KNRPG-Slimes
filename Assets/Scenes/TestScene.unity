@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 186221296}
   m_Layer: 0
   m_Name: EvilSlime
-  m_TagString: Untagged
+  m_TagString: Slime
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -261,7 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3612f79d2d6a2da4cbcc9d16ae9d342b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 855578415}
   Delay: 1
 --- !u!135 &186221297
 SphereCollider:
@@ -480,7 +479,7 @@ GameObject:
   - component: {fileID: 855578416}
   m_Layer: 0
   m_Name: GoodSlime
-  m_TagString: Untagged
+  m_TagString: Slime
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -511,7 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3612f79d2d6a2da4cbcc9d16ae9d342b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 186221300}
   Delay: 1
 --- !u!135 &855578417
 SphereCollider:
