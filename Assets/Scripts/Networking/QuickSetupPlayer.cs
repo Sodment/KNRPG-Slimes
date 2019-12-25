@@ -6,6 +6,7 @@ using System.IO;
 
 public class QuickSetupPlayer : MonoBehaviour
 {
+    int PlayerCount=1;
     void Start()
     {
         CreatePlayer();
@@ -13,7 +14,7 @@ public class QuickSetupPlayer : MonoBehaviour
 
     private void CreatePlayer()
     {
-        Debug.Log("CreatePlayer");
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
+        Debug.Log("CreatePlayer"+PlayerCount);
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.Euler(0,45+180*PlayerCount,0));
     }
 }

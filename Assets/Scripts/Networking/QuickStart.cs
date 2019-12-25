@@ -26,6 +26,12 @@ public class QuickStart : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed! Room doesn't exist");
+        CreateRoom();
+    }
+
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("Fail connect");
@@ -36,7 +42,7 @@ public class QuickStart : MonoBehaviourPunCallbacks
     {
         int RandomRoomNumber = Random.Range(0, 1000);
         RoomOptions RoomSet = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)RoomSize };
-        PhotonNetwork.CreateRoom("Room" + RandomRoomNumber, RoomSet);
+        PhotonNetwork.CreateRoom("Room"+RandomRoomNumber, RoomSet);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

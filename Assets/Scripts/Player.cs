@@ -12,11 +12,29 @@ public class Player : MonoBehaviour
     float RotateY;
 
     public float Sensitive = 1;
+
+    private void Awake()
+    {
+        if (GameObject.FindGameObjectsWithTag("Player").Length > 1)
+        {
+            foreach(GameObject k in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if(k.GetComponent<PhotonView>().ViewID != GetComponent<PhotonView>().ViewID)
+                {
+                    Destroy(k);
+                }
+            }
+        }
+
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<InventoryV2>().SetView(GetComponent<PhotonView>());
+    }
+
     void Start()
     {
         RotateX = Cam.rotation.eulerAngles.x;
         RotateY = transform.rotation.eulerAngles.y;
         PlayerID = GetComponentInParent<PhotonView>().ViewID;
+
     }
 
     // Update is called once per frame

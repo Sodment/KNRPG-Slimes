@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3223294579116916917}
   - component: {fileID: 8911060476765799393}
   - component: {fileID: 2657047052544289707}
-  m_Layer: 0
+  - component: {fileID: 8928283290597204317}
+  m_Layer: 2
   m_Name: WaterCrystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,5 +104,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f80fa14d914e6042aa9193bcc70509c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPos: {x: 0, y: 0, z: 0}
+--- !u!114 &8928283290597204317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785178022171571305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23bd79515153f0f4a80778321c5c2de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

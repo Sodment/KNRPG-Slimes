@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using Photon.Realtime;
 
 public class QuickStartRoomController : MonoBehaviourPunCallbacks
 {
@@ -18,7 +19,6 @@ public class QuickStartRoomController : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Joined");
         StartGame();
     }
 

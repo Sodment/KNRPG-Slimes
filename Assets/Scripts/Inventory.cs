@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Inventory : MonoBehaviour
 {
@@ -8,52 +9,52 @@ public class Inventory : MonoBehaviour
     public GameObject[] Items;
 
     List<GameObject> Current;
-    List<GameObject> CurrentDrop;
     List<GameObject> Droped;
+
+    PhotonView Owner;
 
     private void Start()
     {
+        Owner = GetComponent<PhotonView>();
         Current = new List<GameObject>();
-        CurrentDrop = new List<GameObject>();
         Droped = new List<GameObject>();
         ReRoll();
     }
 
-    public void ReRoll()
+    private void ReRoll()
     {
         foreach(GameObject k in Droped)
         {
-            k.GetComponent<DragableObject>().Start();
+            //k.GetComponent<DragableObject>().Start();
+            k.GetComponent<InstantiateObjects>().InstantiateObject(k);
         }
-        Droped.Clear();
-        foreach(GameObject k in CurrentDrop)
+
+        foreach(GameObject k in Current)
         {
+            if (Droped.Contains(k)) { continue; }
+            Debug.Log("Destroy");
             Destroy(k);
         }
-        CurrentDrop.Clear();
+
+        Current.Clear();
+        Droped.Clear();
         foreach(Transform k in Slots)
         {
             GameObject GO = (GameObject)Instantiate(Items[Random.Range(0, Items.Length)], k.position + Vector3.up, Quaternion.identity);
-            CurrentDrop.Add(GO);
-            GO.GetComponent<DragableObject>().SetOwner(this);
+            Current.Add(GO);
+           // GO.GetComponent<DragableObject>().SetOwner(this);
+            GO.GetComponent<InstantiateObjects>().SetOwner(Owner);
         }
-        Current = CurrentDrop;
     }
 
     public void RemoveObject(GameObject k )
     {
-        CurrentDrop.Remove(k);
         if (Droped.Contains(k)) { return; }
         Droped.Add(k);
     }
 
     public void AddObject(GameObject k)
     {
-        if (CurrentDrop.Contains(k)) { return; }
-        if (Current.Contains(k))
-        {
-            CurrentDrop.Add(k);
-            Droped.Remove(k);
-        }
+        Droped.Remove(k);
     }
 }
