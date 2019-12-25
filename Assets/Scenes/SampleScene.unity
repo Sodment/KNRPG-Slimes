@@ -468,7 +468,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.29e-43, y: 1.5768916e-18, z: 9.29e-43, w: 9.734386e-33}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: -0.01180245}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartButton: {fileID: 619385535}
   CancelButton: {fileID: 1164510721}
-  RoomSize: 4
+  RoomSize: 2
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
