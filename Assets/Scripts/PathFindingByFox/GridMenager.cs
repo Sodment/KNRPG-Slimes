@@ -126,7 +126,7 @@ public class GridMenager : MonoBehaviour
             }
         }
 
-        Debug.Log("Something went wrong");
+        Debug.Log("Ścieżki po prostu nie ma... No to ja tu postoję... zaczekam...");
         return StartNode;
     }
 

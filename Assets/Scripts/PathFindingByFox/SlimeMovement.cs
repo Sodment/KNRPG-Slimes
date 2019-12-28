@@ -59,8 +59,8 @@ public class SlimeMovement : MonoBehaviour
 
     public void Stop()
     {
-        Debug.Log("Fight");
         Fight = true;
+        NextNode.Walkable = true;
         NextNode = MyNode;
         transform.position = new Vector3(MyNode.transform.position.x, transform.position.y, MyNode.transform.position.z);
         MyNode.Walkable = false;
