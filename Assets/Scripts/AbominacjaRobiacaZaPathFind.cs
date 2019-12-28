@@ -6,7 +6,8 @@ public class AbominacjaRobiacaZaPathFind : MonoBehaviour
 {
     Transform Target;
     public float Delay;
-    float delay;
+    public float StartDelay;
+    Vector3 Direction;
     private void Start()
     {
         Material MyMaterial = GetComponent<Renderer>().sharedMaterial;
@@ -23,42 +24,45 @@ public class AbominacjaRobiacaZaPathFind : MonoBehaviour
                 }
             }
         }
-        delay = Delay;
+       // delay = Delay;
     }
     void Update()
     {
-        if(Vector3.Distance(Target.position, transform.position) > 1.2f)
+        if (Vector3.Distance(Target.position, transform.position) > 1.2f)
         {
-            if (delay <= 0)
+            if (StartDelay <= 0)
             {
+                transform.position = new Vector3(Mathf.Round(transform.position.x * 10.0f) * 0.1f, transform.position.y, Mathf.Round(transform.position.z * 10.0f) * 0.1f);
+                Direction = Vector3.zero;
                 Vector3 Way = Target.position - transform.position;
                 if (Mathf.Abs(Way.x) > Mathf.Abs(Way.z)) 
                 {
                     Ray ray = new Ray(transform.position, Vector3.right * Mathf.Sign(Way.x));
                     if(!Physics.Raycast(ray, 1.0f))
-                    { transform.position += Vector3.right * Mathf.Sign(Way.x); }
+                    { Direction = Vector3.right * Mathf.Sign(Way.x); }
                     else
                     {
                         ray = new Ray(transform.position, Vector3.forward * Mathf.Sign(Way.z));
                         if (!Physics.Raycast(ray, 1.0f))
-                        { transform.position += Vector3.forward * Mathf.Sign(Way.z); }
+                        { Direction = Vector3.forward * Mathf.Sign(Way.z); }
                     }
                 }
                 else 
                 {
                     Ray ray = new Ray(transform.position, Vector3.forward * Mathf.Sign(Way.z));
                     if (!Physics.Raycast(ray, 1.0f))
-                    { transform.position += Vector3.forward * Mathf.Sign(Way.z); }
+                    { Direction= Vector3.forward * Mathf.Sign(Way.z); }
                     else
                     {
                         ray = new Ray(transform.position, Vector3.right * Mathf.Sign(Way.x));
                         if (!Physics.Raycast(ray, 1.0f))
-                        { transform.position += Vector3.right * Mathf.Sign(Way.x); }
+                        { Direction = Vector3.right * Mathf.Sign(Way.x); }
                     }
                 }
-                delay = Delay;
+                transform.position += Direction;
+                    StartDelay = Delay;
             }
-            delay -= Time.deltaTime;
+            StartDelay -= Time.deltaTime;
         }
     }
 }
