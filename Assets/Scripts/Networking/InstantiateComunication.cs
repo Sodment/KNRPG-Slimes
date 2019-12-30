@@ -10,7 +10,6 @@ public class InstantiateComunication : MonoBehaviour
     {
         string Name = objName.Remove(objName.Length - 7, 7);
         GameObject GO = (GameObject)Instantiate(Resources.Load(Name), Position, Quaternion.Euler(Rotation));
-        GO.GetComponent<DragableObject>().TargetPos = Position;
         Debug.Log("Player" +GetComponent<PhotonView>().ViewID+" Set Object: "+Name+" on position: "+Position);
     }
 }

@@ -58,12 +58,12 @@ public class GridMenager : MonoBehaviour
 
     Node GetClosestNode(Node MyNode, Node TargetNode)
     {
-        float Weight = float.MaxValue;
+        float Weight = GetWeight(MyNode, TargetNode)*2.0f;
         Node Target = TargetNode;
-        foreach(Node k in GetNeightbour(TargetNode.GetX(), TargetNode.GetY()))
+        foreach(Node k in GridNodes)
         {
-            if(!k.Walkable || k.Unit!=null) { continue; }
-            float currWeight = GetWeight(MyNode, k);
+            if(!k.Walkable || k.Unit!=null || k==MyNode || k==TargetNode) { continue; }
+            float currWeight = GetWeight(MyNode, k) + GetWeight(k, TargetNode);
             if (currWeight < Weight)
             {
                 Weight = currWeight;
@@ -73,7 +73,7 @@ public class GridMenager : MonoBehaviour
         return Target;
     }
 
-    float GetWeight(Node A, Node B)
+    public float GetWeight(Node A, Node B)
     {
         return Mathf.Abs(A.GetX() - B.GetX()) + Mathf.Abs(A.GetY() - B.GetY()) + Vector3.Distance(A.transform.position,B.transform.position);
     }
@@ -154,9 +154,33 @@ public class GridMenager : MonoBehaviour
         {
             if (k.Unit != null)
             {
-                if (k.Unit.PlayerID != PlayerIndex) { k.Unit.Stop(); return k.Unit; }
+                if (k.Unit.PlayerID != PlayerIndex)
+                {
+                    return k.Unit;
+                }
             }
         }
         return null;
+    }
+
+    public void Move(SlimeMovement Start, SlimeMovement End)
+    {
+        Vector3 TargetPos = Start.NextNode.transform.position;
+        Start.transform.position = new Vector3(TargetPos.x, Start.transform.position.y, TargetPos.z); //Dociągnięcie do noda
+        Start.MyNode.Unit = null;
+        Start.MyNode.Walkable = true;
+        Start.MyNode = Start.NextNode;
+        SlimeMovement SM = NearEnemy(Start.MyNode, Start.PlayerID);
+        if (SM != null)
+        {
+            Start.Fight = true;
+            Start.Target = SM;
+            SM.Target = Start;
+            Start.MyNode = Start.NextNode;
+            return;
+        }
+        Start.NextNode = GetNextNode(Start.MyNode, End.NextNode);
+        Start.NextNode.Unit = Start;
+        Start.NextNode.Walkable = false;
     }
 }
