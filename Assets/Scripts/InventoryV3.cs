@@ -30,10 +30,6 @@ public class InventoryV3 : MonoBehaviour
     {
         if (DragObject != null)
         {
-            if (DropZone != null)
-            {
-                Debug.Log(DropZone.name);
-            }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit HitInfo;
             if (Physics.Raycast(ray, out HitInfo))
@@ -74,7 +70,7 @@ public class InventoryV3 : MonoBehaviour
 
     public void SetDropZone(GameObject DZ)
     {
-        if (DZ.GetComponent<ButtonContainer>().ContainObject!=null) { return; }
+       // if (DZ.GetComponent<ButtonContainer>().ContainObject!=null) { return; }
         if (DropZone != null) { DownLight(DropZone); }
         DropZone = DZ;
         DropZoneIsUI = true;
@@ -93,23 +89,22 @@ public class InventoryV3 : MonoBehaviour
         if (DropZone != null)
         {
             DragObject.transform.parent = DropZone.transform;
+            DownLight(DropZone);
 
-            if (DropZone.GetComponent<ButtonContainer>()) //Odkładanie do EQ
+            if (DropZone.GetComponent<ButtonContainer>())
             {
-                DragObject.InUI = true;
-                DragObject.Parent = DropZone.transform;
-                DragObject.LastParent = DragObject.Parent;
-                DragObject.transform.parent = Camera.main.transform;
-                DropZone.GetComponent<ButtonContainer>().ContainObject = DragObject.gameObject;
-                DownLight(DropZone);
+                if (!DropZone.GetComponent<ButtonContainer>().ContainObject)
+                    PutInEq();
+                else
+                    SwapToEq(DropZone.GetComponent<ButtonContainer>().ContainObject);
             }
-            else if (DropZone.GetComponent<Node>())// Odkładanie na planszę
+            else if (DropZone.GetComponent<Node>())
             {
-
-                DragObject.InUI = false;
-                DragObject.Parent = DropZone.transform;
-                DragObject.LastParent = DragObject.Parent;
-                DownLight(DropZone);
+                PutInArena();
+            }
+            else if (DropZone.GetComponent<SlimeLevels>())
+            {
+                SwapToArena(DropZone);
             }
             else { Odstaw(); }
             
@@ -121,6 +116,73 @@ public class InventoryV3 : MonoBehaviour
 
         DragObject = null;
         DropZone = null;
+    }
+
+    void PutInEq()
+    {
+        DragObject.InUI = true;
+        DragObject.Parent = DropZone.transform;
+        DragObject.LastParent = DragObject.Parent;
+        DragObject.transform.parent = Camera.main.transform;
+        DropZone.GetComponent<ButtonContainer>().ContainObject = DragObject.gameObject;
+    }
+
+    void PutInArena()
+    {
+        DragObject.InUI = false;
+        DragObject.Parent = DropZone.transform;
+        DragObject.LastParent = DragObject.Parent;
+    }
+
+    void SwapToEq(GameObject SwapObject)
+    {
+        DragObject.InUI = true;
+        Transform tmp = DragObject.LastParent;
+        DragObject.Parent = DropZone.transform;
+        DragObject.LastParent = DragObject.Parent;
+        DragObject.transform.parent = Camera.main.transform;
+        DropZone.GetComponent<ButtonContainer>().ContainObject = DragObject.gameObject;
+
+        DragableObject SwapedObject = SwapObject.GetComponent<DragableObject>();
+        SwapedObject.enabled = true;
+        if (tmp.GetComponent<ButtonContainer>())
+        {
+            SwapedObject.InUI = true;
+            SwapedObject.transform.parent = Camera.main.transform;
+            tmp.GetComponent<ButtonContainer>().ContainObject = SwapObject;
+        }
+        else
+        {
+            SwapedObject.InUI = false;
+            SwapedObject.transform.parent = tmp;
+        }
+        SwapedObject.Parent = tmp;
+        SwapedObject.LastParent = tmp;
+    }
+
+    void SwapToArena(GameObject SwapObject)
+    {
+        DragObject.InUI = false;
+        Transform tmp = DragObject.LastParent;
+        DragObject.Parent = DropZone.GetComponent<DragableObject>().LastParent;
+        DragObject.LastParent = DragObject.Parent;
+        DragObject.transform.parent = DragObject.Parent;
+
+        DragableObject SwapedObject = SwapObject.GetComponent<DragableObject>();
+        SwapedObject.enabled = true;
+        if (tmp.GetComponent<ButtonContainer>())
+        {
+            SwapedObject.InUI = true;
+            SwapedObject.transform.parent = Camera.main.transform;
+            tmp.GetComponent<ButtonContainer>().ContainObject = SwapObject;
+        }
+        else
+        {
+            SwapedObject.InUI = false;
+            SwapedObject.transform.parent = tmp;
+        }
+        SwapedObject.Parent = tmp;
+        SwapedObject.LastParent = tmp;
     }
 
     void Odstaw()

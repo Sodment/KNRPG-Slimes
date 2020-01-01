@@ -45,10 +45,6 @@ public class InventoryForCristal : MonoBehaviour
     {
         if (DragObject != null)
         {
-            if (DropZone != null)
-            {
-                Debug.Log(DropZone.name);
-            }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit HitInfo;
             if (Physics.Raycast(ray, out HitInfo))
@@ -89,7 +85,6 @@ public class InventoryForCristal : MonoBehaviour
 
     public void SetDropZone(GameObject DZ)
     {
-        if (DZ.GetComponent<CrystalContainer>().ContainObject != null) { return; }
         if (DropZone != null) { DownLight(DropZone); }
         DropZone = DZ;
         DropZoneIsUI = true;
@@ -103,39 +98,30 @@ public class InventoryForCristal : MonoBehaviour
 
     void StopDrag()
     {
-        DragObject.gameObject.layer = 0;
-
         if (DropZone != null)
         {
             DragObject.transform.parent = DropZone.transform;
-
-            if (DropZone.GetComponent<CrystalContainer>()) //Odkładanie do EQ
+            DownLight(DropZone);
+            if (DropZone.GetComponent<CrystalContainer>())
             {
-                DragObject.InUI = true;
-                DragObject.Parent = DropZone.transform;
-                DragObject.LastParent = DragObject.Parent;
-                DragObject.transform.parent = Camera.main.transform;
-                DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
-                DownLight(DropZone);
+                if (!DropZone.GetComponent<CrystalContainer>().ContainObject)
+                    PutInEq();
+                else
+                    Swap(DropZone.GetComponent<CrystalContainer>().ContainObject);
             }
-            else if (DropZone.GetComponent<SlimeLevels>())// Odkładanie na planszę
+            else if (DropZone.GetComponent<SlimeLevels>())
             {
-
-                DragObject.InUI = false;
-                DragObject.Parent = DropZone.transform;
-                DragObject.LastParent = DragObject.Parent;
-                DownLight(DropZone);
+                PutInSlime();
             }
             else { Odstaw(); }
-
         }
-        else // Odkładanie na ostatnią pozycję
+        else 
         {
             Odstaw();
         }
-
         DragObject = null;
         DropZone = null;
+        DropZoneIsUI = false;
     }
 
     void Odstaw()
@@ -151,12 +137,48 @@ public class InventoryForCristal : MonoBehaviour
             DragObject.LastParent = DragObject.Parent;
             DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
         }
-        if (DropZone.GetComponent<SlimeLevels>()) // Odkładanie na planszę
+        if (DropZone.GetComponent<SlimeLevels>()) // Odkładanie do Slimea
         {
             DragObject.InUI = false;
             DragObject.Parent = DropZone.transform;
             DragObject.LastParent = DragObject.Parent;
+            DragObject.GetComponent<Crystal>().enabled = true;
         }
+    }
+
+    void PutInEq()
+    {
+        DragObject.InUI = true;
+        DragObject.Parent = DropZone.transform;
+        DragObject.LastParent = DragObject.Parent;
+        DragObject.transform.parent = Camera.main.transform;
+        DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
+    }
+
+    void PutInSlime()
+    {
+        DragObject.InUI = false;
+        DragObject.Parent = DropZone.transform;
+        DragObject.LastParent = DragObject.Parent;
+        DragObject.GetComponent<Crystal>().enabled = true;
+    }
+
+    void Swap(GameObject SwapObject)
+    {
+        DragObject.InUI = true;
+        Transform tmp = DragObject.LastParent;
+        DragObject.Parent = DropZone.transform;
+        DragObject.LastParent = DragObject.Parent;
+        DragObject.transform.parent = Camera.main.transform;
+        DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
+
+        DragableObject SwapedObject = SwapObject.GetComponent<DragableObject>();
+        SwapedObject.enabled = true;
+        SwapedObject.InUI = true;
+        SwapedObject.Parent = tmp;
+        SwapedObject.LastParent = tmp;
+        SwapedObject.transform.parent = Camera.main.transform;
+        tmp.GetComponent<CrystalContainer>().ContainObject = SwapObject;
     }
 
     void HighLight(GameObject k)
