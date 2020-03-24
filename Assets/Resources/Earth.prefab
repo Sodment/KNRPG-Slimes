@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 8391307851295891281}
   - component: {fileID: 2832591968863511464}
   - component: {fileID: 8097015277204087036}
-  - component: {fileID: -2392686957826077426}
-  - component: {fileID: 2569498660112740781}
   - component: {fileID: 5409730242827688885}
+  - component: {fileID: 6823585030491514236}
   m_Layer: 2
   m_Name: Earth
   m_TagString: Untagged
@@ -95,33 +94,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.29999995
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2392686957826077426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4572197538885130100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f80fa14d914e6042aa9193bcc70509c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Parent: {fileID: 0}
-  LastParent: {fileID: 0}
-  InUI: 0
---- !u!114 &2569498660112740781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4572197538885130100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23bd79515153f0f4a80778321c5c2de9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5409730242827688885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,9 +101,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4572197538885130100}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5139aac5b3080e49834ee32ce216822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!114 &6823585030491514236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572197538885130100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0400c117a39364e84d066a5c7fe261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drag: 0
+  LastParent: {fileID: 0}

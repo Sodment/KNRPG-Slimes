@@ -8,14 +8,15 @@ public class InstantiateObjects : MonoBehaviour
 {
     PhotonView MyView;
 
-    public void InstantiateObject(GameObject obj)
+    private void Start()
     {
-        MyView.RPC("RPC_InstantiateObject", RpcTarget.All, obj.name, obj.transform.position, obj.transform.rotation.eulerAngles);
-        Destroy(this.gameObject, 0.1f);
+        MyView = GetComponent<PhotonView>();
     }
 
-    public void SetOwner(PhotonView Owner)
+    public void InstantiateObject(GameObject obj)
     {
-        MyView = Owner;
+        int Type = obj.GetComponent<SlimeLevels>().Type;
+        int Level = obj.GetComponent<SlimeLevels>().LVL;
+        MyView.RPC("RPC_InstantiateObject", RpcTarget.All, obj.transform.position, obj.transform.rotation.eulerAngles, Type, Level, MyView.ViewID);
     }
 }

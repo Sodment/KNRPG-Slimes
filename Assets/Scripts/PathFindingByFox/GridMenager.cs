@@ -25,6 +25,7 @@ public class GridMenager : MonoBehaviour
     {
         int X = Mathf.RoundToInt(Position.x + 3.5f);
         int Y = Mathf.RoundToInt(Position.z + 3.5f);
+        if (GetNodeByIndex(X, Y) == null) { Debug.Log("Index Error"); }
         return GetNodeByIndex(X, Y); //Dodatkowe zabezpieczenie
     }
 
@@ -125,8 +126,6 @@ public class GridMenager : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Ścieżki po prostu nie ma... No to ja tu postoję... zaczekam...");
         return StartNode;
     }
 
@@ -161,26 +160,5 @@ public class GridMenager : MonoBehaviour
             }
         }
         return null;
-    }
-
-    public void Move(SlimeMovement Start, SlimeMovement End)
-    {
-        Vector3 TargetPos = Start.NextNode.transform.position;
-        Start.transform.position = new Vector3(TargetPos.x, Start.transform.position.y, TargetPos.z); //Dociągnięcie do noda
-        Start.MyNode.Unit = null;
-        Start.MyNode.Walkable = true;
-        Start.MyNode = Start.NextNode;
-        SlimeMovement SM = NearEnemy(Start.MyNode, Start.PlayerID);
-        if (SM != null)
-        {
-            Start.Fight = true;
-            Start.Target = SM;
-            SM.Target = Start;
-            Start.MyNode = Start.NextNode;
-            return;
-        }
-        Start.NextNode = GetNextNode(Start.MyNode, End.NextNode);
-        Start.NextNode.Unit = Start;
-        Start.NextNode.Walkable = false;
     }
 }

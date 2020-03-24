@@ -16,19 +16,37 @@ public class InventoryForCristal : MonoBehaviour
     private void Start()
     {
         Pointer = new GameObject().transform;
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
         foreach (CrystalContainer k in transform.GetComponentsInChildren<CrystalContainer>())
         {
             k.ContainObject = (GameObject)Instantiate(Crystals[Random.Range(0, Crystals.Length)]);
             k.ContainObject.GetComponent<DragableObject>().Parent = k.transform;
             k.ContainObject.GetComponent<DragableObject>().LastParent = k.transform;
             k.ContainObject.GetComponent<DragableObject>().InUI = true;
-            k.ContainObject.transform.parent = Camera.main.transform;
+            k.ContainObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             k.ContainObject.transform.position = Camera.main.ScreenToWorldPoint(k.transform.position) + Camera.main.transform.forward;
         }
     }
 
     public void ReRoll()
     {
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
         foreach (CrystalContainer k in transform.GetComponentsInChildren<CrystalContainer>())
         {
             Destroy(k.ContainObject);
@@ -36,7 +54,7 @@ public class InventoryForCristal : MonoBehaviour
             k.ContainObject.GetComponent<DragableObject>().Parent = k.transform;
             k.ContainObject.GetComponent<DragableObject>().LastParent = k.transform;
             k.ContainObject.GetComponent<DragableObject>().InUI = true;
-            k.ContainObject.transform.parent = Camera.main.transform;
+            k.ContainObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             k.ContainObject.transform.position = Camera.main.ScreenToWorldPoint(k.transform.position) + Camera.main.transform.forward;
         }
     }
@@ -132,7 +150,16 @@ public class InventoryForCristal : MonoBehaviour
         if (DropZone.GetComponent<CrystalContainer>()) //Odkładanie do EQ
         {
             DragObject.InUI = true;
-            DragObject.transform.parent = Camera.main.transform;
+            int ChildIndex = 0;
+            if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+            {
+                ChildIndex = 0;
+            }
+            else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+            {
+                ChildIndex = 1;
+            }
+            DragObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             DragObject.Parent = DropZone.transform;
             DragObject.LastParent = DragObject.Parent;
             DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
@@ -151,7 +178,16 @@ public class InventoryForCristal : MonoBehaviour
         DragObject.InUI = true;
         DragObject.Parent = DropZone.transform;
         DragObject.LastParent = DragObject.Parent;
-        DragObject.transform.parent = Camera.main.transform;
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
+        DragObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
         DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
     }
 
@@ -169,7 +205,16 @@ public class InventoryForCristal : MonoBehaviour
         Transform tmp = DragObject.LastParent;
         DragObject.Parent = DropZone.transform;
         DragObject.LastParent = DragObject.Parent;
-        DragObject.transform.parent = Camera.main.transform;
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
+        DragObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
         DropZone.GetComponent<CrystalContainer>().ContainObject = DragObject.gameObject;
 
         DragableObject SwapedObject = SwapObject.GetComponent<DragableObject>();
@@ -177,7 +222,7 @@ public class InventoryForCristal : MonoBehaviour
         SwapedObject.InUI = true;
         SwapedObject.Parent = tmp;
         SwapedObject.LastParent = tmp;
-        SwapedObject.transform.parent = Camera.main.transform;
+        SwapedObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
         tmp.GetComponent<CrystalContainer>().ContainObject = SwapObject;
     }
 

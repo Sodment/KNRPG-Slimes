@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 2145252220696640958}
   - component: {fileID: 5690859894076752199}
   - component: {fileID: 1867021261098746387}
-  - component: {fileID: 7622909693624098425}
-  - component: {fileID: -530080330115170268}
   - component: {fileID: 6613143678339112580}
+  - component: {fileID: 8753290936042826001}
   m_Layer: 2
   m_Name: FireCrystal
   m_TagString: Untagged
@@ -95,33 +94,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.29999995
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7622909693624098425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6252448602919302555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f80fa14d914e6042aa9193bcc70509c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Parent: {fileID: 0}
-  LastParent: {fileID: 0}
-  InUI: 0
---- !u!114 &-530080330115170268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6252448602919302555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23bd79515153f0f4a80778321c5c2de9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6613143678339112580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,9 +101,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6252448602919302555}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5139aac5b3080e49834ee32ce216822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 3
+--- !u!114 &8753290936042826001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252448602919302555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0400c117a39364e84d066a5c7fe261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drag: 0
+  LastParent: {fileID: 0}

@@ -15,13 +15,22 @@ public class InventoryV3 : MonoBehaviour
 
     private void Start()
     {
-        Pointer = new GameObject().transform; 
-        foreach(ButtonContainer k in transform.GetComponentsInChildren<ButtonContainer>())
+        Pointer = new GameObject().transform;
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
+        foreach (ButtonContainer k in transform.GetComponentsInChildren<ButtonContainer>())
         {
             k.ContainObject.GetComponent<DragableObject>().Parent = k.transform;
             k.ContainObject.GetComponent<DragableObject>().LastParent = k.transform;
             k.ContainObject.GetComponent<DragableObject>().InUI = true;
-            k.ContainObject.transform.parent = Camera.main.transform;
+            k.ContainObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             k.ContainObject.transform.position = Camera.main.ScreenToWorldPoint(k.transform.position) + Camera.main.transform.forward;
         }
     }
@@ -100,7 +109,14 @@ public class InventoryV3 : MonoBehaviour
             }
             else if (DropZone.GetComponent<Node>())
             {
-                PutInArena();
+                Debug.Log(DropZone.transform.childCount);
+                if (DropZone.transform.childCount==1)
+                { PutInArena(); }
+                else
+                {
+                    DropZone = DropZone.transform.GetChild(0).gameObject;
+                    SwapToArena(DropZone);
+                }
             }
             else if (DropZone.GetComponent<SlimeLevels>())
             {
@@ -123,7 +139,16 @@ public class InventoryV3 : MonoBehaviour
         DragObject.InUI = true;
         DragObject.Parent = DropZone.transform;
         DragObject.LastParent = DragObject.Parent;
-        DragObject.transform.parent = Camera.main.transform;
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
+        DragObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
         DropZone.GetComponent<ButtonContainer>().ContainObject = DragObject.gameObject;
     }
 
@@ -140,7 +165,16 @@ public class InventoryV3 : MonoBehaviour
         Transform tmp = DragObject.LastParent;
         DragObject.Parent = DropZone.transform;
         DragObject.LastParent = DragObject.Parent;
-        DragObject.transform.parent = Camera.main.transform;
+        int ChildIndex = 0;
+        if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+        {
+            ChildIndex = 0;
+        }
+        else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+        {
+            ChildIndex = 1;
+        }
+        DragObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
         DropZone.GetComponent<ButtonContainer>().ContainObject = DragObject.gameObject;
 
         DragableObject SwapedObject = SwapObject.GetComponent<DragableObject>();
@@ -148,7 +182,7 @@ public class InventoryV3 : MonoBehaviour
         if (tmp.GetComponent<ButtonContainer>())
         {
             SwapedObject.InUI = true;
-            SwapedObject.transform.parent = Camera.main.transform;
+            SwapedObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             tmp.GetComponent<ButtonContainer>().ContainObject = SwapObject;
         }
         else
@@ -173,7 +207,16 @@ public class InventoryV3 : MonoBehaviour
         if (tmp.GetComponent<ButtonContainer>())
         {
             SwapedObject.InUI = true;
-            SwapedObject.transform.parent = Camera.main.transform;
+            int ChildIndex = 0;
+            if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+            {
+                ChildIndex = 0;
+            }
+            else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+            {
+                ChildIndex = 1;
+            }
+            SwapedObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             tmp.GetComponent<ButtonContainer>().ContainObject = SwapObject;
         }
         else
@@ -193,7 +236,16 @@ public class InventoryV3 : MonoBehaviour
         if (DropZone.GetComponent<ButtonContainer>()) //Odkładanie do EQ
         {
             DragObject.InUI = true;
-            DragObject.transform.parent = Camera.main.transform;
+            int ChildIndex = 0;
+            if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player1)
+            {
+                ChildIndex = 0;
+            }
+            else if (GameObject.FindObjectOfType<PVPGameMenager>().CurrentStage == PVPGameMenager.Stage.Player2)
+            {
+                ChildIndex = 1;
+            }
+            DragObject.transform.parent = Camera.main.transform.GetChild(ChildIndex);
             DragObject.Parent = DropZone.transform;
             DragObject.LastParent = DragObject.Parent;
             DropZone.GetComponent<ButtonContainer>().ContainObject = DragObject.gameObject;

@@ -13,6 +13,7 @@ public class Node : MonoBehaviour
 
     public SlimeMovement Unit;
 
+
     public float fCost
     {
         get

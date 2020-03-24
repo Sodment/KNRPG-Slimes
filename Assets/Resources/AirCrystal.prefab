@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 4579890206518474998}
   - component: {fileID: 7832745515326964751}
   - component: {fileID: 4297141675035969371}
-  - component: {fileID: 4546716907264809259}
-  - component: {fileID: 4934884305255018279}
   - component: {fileID: 2694149353262434096}
+  - component: {fileID: 5866755867920182923}
   m_Layer: 2
   m_Name: AirCrystal
   m_TagString: Untagged
@@ -95,33 +94,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.29999995
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4546716907264809259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399026969442463955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f80fa14d914e6042aa9193bcc70509c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Parent: {fileID: 0}
-  LastParent: {fileID: 0}
-  InUI: 0
---- !u!114 &4934884305255018279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399026969442463955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23bd79515153f0f4a80778321c5c2de9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2694149353262434096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,9 +101,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8399026969442463955}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5139aac5b3080e49834ee32ce216822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+--- !u!114 &5866755867920182923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399026969442463955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe0400c117a39364e84d066a5c7fe261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Drag: 0
+  LastParent: {fileID: 0}
