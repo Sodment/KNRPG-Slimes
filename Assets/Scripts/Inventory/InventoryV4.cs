@@ -19,6 +19,7 @@ public class InventoryV4 : MonoBehaviour
             GO.GetComponent<DragSlime>().LastParent = k.gameObject;
             GO.GetComponent<Collider>().enabled = false;
             GO.GetComponent<SlimeMovement>().PlayerID = PlayerIndex;
+            k.RefreshData();
         }
 
         foreach(CrystalContainer k in GetComponentsInChildren<CrystalContainer>())
@@ -38,6 +39,7 @@ public class InventoryV4 : MonoBehaviour
         Container.ContainObject.GetComponent<DragSlime>().SetTMPParent(Container.ContainObject.GetComponent<DragSlime>().LastParent);
         Container.ContainObject.GetComponent<DragSlime>().Drag = true;
         Container.ContainObject = null;
+        Container.RefreshData();
     }
 
     public void GetButtonForSlime(GameObject Object)

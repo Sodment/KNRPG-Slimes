@@ -11,6 +11,8 @@ public class SlimeMovement : MonoBehaviour
     Node NextNode;
 
     public bool Fight = false;
+    bool ReadyToFight = false;
+    SlimeMovement Target;
 
     List<SlimeMovement> Enemies = new List<SlimeMovement>();
 
@@ -40,23 +42,42 @@ public class SlimeMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Vector3.Distance(transform.position, NextNode.transform.position) <= MovmentSpeed * 2 * Time.deltaTime)
+        if (Enemies.Count > 0)
         {
-            transform.position = NextNode.transform.position;
-            MyNode.Walkable = true;
-            MyNode = NextNode;
-            NextNode = GetNext();
-        }
-        else
-        {
-             transform.Translate((NextNode.transform.position - MyNode.transform.position).normalized * MovmentSpeed * Time.deltaTime, Space.World);
+            if (Vector3.Distance(transform.position, NextNode.transform.position) <= MovmentSpeed * 2 * Time.deltaTime)
+            {
+                transform.position = NextNode.transform.position;
+                MyNode.Walkable = true;
+                MyNode = NextNode;
+                Enemies.Clear();
+                foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                {
+                    if (k.PlayerID != PlayerID)
+                    {
+                        Enemies.Add(k);
+                    }
+                }
+                if (Enemies.Count == 0) {Debug.Log("Brak Przeciwników"); return; }
+                NextNode = GetNext();
+            }
+            else
+            {
+                transform.Translate((NextNode.transform.position - MyNode.transform.position).normalized * MovmentSpeed * Time.deltaTime, Space.World);
+            }
+
+            if(ReadyToFight && Vector3.Distance(transform.position, Target.transform.position) <= 1.1f)
+            {
+                Fight = true;
+            }
         }
     }
 
     Node GetNext()
     {
+        Fight = false;
+        ReadyToFight = false;
         float MinDistance = float.MaxValue;
-        SlimeMovement Target = null;
+        Target = null;
         List<SlimeMovement> ToRemove = new List<SlimeMovement>();
         foreach (SlimeMovement k in Enemies)
         {
@@ -77,7 +98,7 @@ public class SlimeMovement : MonoBehaviour
         if(NextNode == MyNode)
         {
             GetComponent<SlimeFightTmp>().Enemy = Target.GetComponent<SlimeFightTmp>();
-            Fight = true;
+            ReadyToFight = true;
         }
         return NextNode;
     }

@@ -47,6 +47,7 @@ public class DragCrystal : MonoBehaviour
             if (Parent.GetComponent<ButtonContainer>().ContainObject != null)
             {
                 Parent.GetComponent<ButtonContainer>().ContainObject.GetComponent<SlimeLevels>().AddCrystal(GetComponent<Crystal>().Type);
+                Parent.GetComponent<ButtonContainer>().RefreshData();
                 Destroy(gameObject);
             }
         }

@@ -89,6 +89,7 @@ public class DragSlime : MonoBehaviour
             {
                 transform.parent = Camera.main.transform.GetChild(Owner - 1);
                 LastParent.GetComponent<ButtonContainer>().ContainObject = gameObject;
+                LastParent.GetComponent<ButtonContainer>().RefreshData();
                 GetComponent<Collider>().enabled = false;
             }
             if (LastParent.GetComponent<Node>())
@@ -104,6 +105,7 @@ public class DragSlime : MonoBehaviour
             {
                 Parent.transform.parent = Camera.main.transform.GetChild(Owner - 1);
                 tmp.GetComponent<ButtonContainer>().ContainObject = Parent;
+                tmp.GetComponent<ButtonContainer>().RefreshData();
                 Parent.GetComponent<Collider>().enabled = false;
             }
             if (tmp.GetComponent<Node>())
@@ -121,6 +123,7 @@ public class DragSlime : MonoBehaviour
             {
                 transform.parent = Camera.main.transform.GetChild(Owner - 1);
                 Parent.GetComponent<ButtonContainer>().ContainObject = gameObject;
+                Parent.GetComponent<ButtonContainer>().RefreshData();
                 GetComponent<Collider>().enabled = false;
             }
             else
@@ -128,6 +131,7 @@ public class DragSlime : MonoBehaviour
                 transform.parent = Camera.main.transform.GetChild(Owner - 1);
                 GameObject tmp = Parent.GetComponent<ButtonContainer>().ContainObject;
                 Parent.GetComponent<ButtonContainer>().ContainObject = gameObject;
+                Parent.GetComponent<ButtonContainer>().RefreshData();
                 tmp.GetComponent<DragSlime>().LastParent = LastParent;
                 GetComponent<Collider>().enabled = false;
                 if (LastParent.GetComponent<Node>())
@@ -140,6 +144,7 @@ public class DragSlime : MonoBehaviour
                 {
                     tmp.transform.parent = Camera.main.transform.GetChild(Owner - 1);
                     LastParent.GetComponent<ButtonContainer>().ContainObject = tmp;
+                    LastParent.GetComponent<ButtonContainer>().RefreshData();
                     tmp.GetComponent<Collider>().enabled = false;
                 }
             }
@@ -167,6 +172,7 @@ public class DragSlime : MonoBehaviour
                 {
                     tmp.transform.parent = Camera.main.transform.GetChild(Owner - 1);
                     LastParent.GetComponent<ButtonContainer>().ContainObject = tmp;
+                    LastParent.GetComponent<ButtonContainer>().RefreshData();
                     tmp.GetComponent<Collider>().enabled = false;
                 }
                 LastParent = Parent;
