@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlimeFightTmp : MonoBehaviour
 {
-    public float HP = 20;
+    public static float HP = 20;
+    private float currentHP = HP;
     public float AttackSpeed = 1;
     public float dmg = 5;
-
+    public Image HealthBar;
     float wait;
+    [SerializeField]
+    private Canvas healthCanvas;
 
     public SlimeFightTmp Enemy;
     SlimeMovement Movement;
@@ -17,6 +21,7 @@ public class SlimeFightTmp : MonoBehaviour
     {
         Movement = GetComponent<SlimeMovement>();
         wait = 1.0f / AttackSpeed;
+        healthCanvas.enabled = false;
     }
 
     private void Update()
@@ -30,12 +35,17 @@ public class SlimeFightTmp : MonoBehaviour
             }
             else { wait -= Time.deltaTime; }
         }
+        if(HealthBar.fillAmount != 1)
+        {
+            healthCanvas.enabled = true;
+        }
     }
 
     public void GetDMG(float dmg)
     {
-        HP -= dmg;
-        if (HP <= 0) {
+        currentHP -= dmg;
+        HealthBar.fillAmount = currentHP/HP;
+        if (currentHP <= 0) {
             GetComponent<SlimeMovement>().FreeNodes();
             Destroy(gameObject);
         }
