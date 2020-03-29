@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SlimeLevels : MonoBehaviour
 {
-    List<int> Crystals = new List<int>();
+    public List<int> Crystals = new List<int>();
     public int LVL = 1;
     public int Type = 0;
 

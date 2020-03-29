@@ -75,10 +75,12 @@ public class PVPGameMenager : MonoBehaviour
 
             //Bitwa
             CurrentStage = Stage.Battle;
+            List<GameObject> FightingSlimes = new List<GameObject>();
             foreach(SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
             {
                 k.enabled = true;
                 k.GetComponent<DragSlime>().enabled = false;
+                FightingSlimes.Add(k.gameObject);
             }
             for (int i = TureDruation*10; i >= 0; i--)
             {
@@ -93,11 +95,14 @@ public class PVPGameMenager : MonoBehaviour
                 Timer.text = i.ToString();
                 yield return new WaitForSecondsRealtime(1);
             }
-            foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+            foreach (GameObject k in FightingSlimes)
             {
-                k.enabled = false;
+                k.SetActive(true);
+                k.GetComponent<SlimeMovement>().enabled = false;
                 k.GetComponent<DragSlime>().enabled = true;
+                //k.GetComponent<SlimeFightTmp>().Refresh();
             }
+
             //Obrót o 90 stopni
             CurrentStage = Stage.Rotate;
             for (int i = 0; i < 90; i++)
@@ -150,10 +155,12 @@ public class PVPGameMenager : MonoBehaviour
 
             //Bitwa
             CurrentStage = Stage.Battle;
+            FightingSlimes.Clear();
             foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
             {
                 k.enabled = true;
-                k.GetComponent<DragSlime>().enabled=false;
+                k.GetComponent<DragSlime>().enabled = false;
+                FightingSlimes.Add(k.gameObject);
             }
             for (int i = TureDruation * 10; i >= 0; i--)
             {
@@ -168,10 +175,12 @@ public class PVPGameMenager : MonoBehaviour
                 Timer.text = i.ToString();
                 yield return new WaitForSecondsRealtime(1);
             }
-            foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+            foreach (GameObject k in FightingSlimes)
             {
-                k.enabled = false;
+                k.SetActive(true);
+                k.GetComponent<SlimeMovement>().enabled = false;
                 k.GetComponent<DragSlime>().enabled = true;
+              //  k.GetComponent<SlimeFightTmp>().Refresh();
             }
 
             //Obrót o -90 stopni

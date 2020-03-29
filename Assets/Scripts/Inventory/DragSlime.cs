@@ -190,6 +190,7 @@ public class DragSlime : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameObject.FindObjectsOfType<InventoryV4>().Length == 0) { return; }
         if (Owner == GameObject.FindObjectOfType<InventoryV4>().PlayerIndex)
         {
             Drag = true;
