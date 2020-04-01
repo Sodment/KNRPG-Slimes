@@ -97,7 +97,7 @@ public class SlimeMovement : MonoBehaviour
         NextNode.Walkable = false;
         if(NextNode == MyNode)
         {
-            GetComponent<SlimeFightTmp>().Enemy = Target.GetComponent<SlimeFightTmp>();
+           // GetComponent<SlimeFightTmp>().Enemy = Target.GetComponent<SlimeFightTmp>();
             ReadyToFight = true;
         }
         return NextNode;

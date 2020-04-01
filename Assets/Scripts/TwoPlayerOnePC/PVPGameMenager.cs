@@ -42,7 +42,9 @@ public class PVPGameMenager : MonoBehaviour
             }
 
             //Obrót o 180 stopni
-            Cleaner.FastDrop();
+            if (Cleaner != null)
+            { Cleaner.FastDrop(); }
+            else { EQPlayer1.GetComponent<IventoryV5>().FastPut(); }
             CurrentStage = Stage.Rotate;
             HudPlayer1.SetActive(false);
             EQPlayer1.SetActive(false);
@@ -63,7 +65,9 @@ public class PVPGameMenager : MonoBehaviour
             }
 
             //Obrót o -90 stopni
-            Cleaner.FastDrop();
+            if (Cleaner != null)
+            { Cleaner.FastDrop(); }
+            else { EQPlayer2.GetComponent<IventoryV5>().FastPut(); }
             CurrentStage = Stage.Rotate;
             HudPlayer2.SetActive(false);
             EQPlayer2.SetActive(false);
@@ -76,31 +80,67 @@ public class PVPGameMenager : MonoBehaviour
             //Bitwa
             CurrentStage = Stage.Battle;
             List<GameObject> FightingSlimes = new List<GameObject>();
-            foreach(SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+            if (Cleaner != null)
             {
-                k.enabled = true;
-                k.GetComponent<DragSlime>().enabled = false;
-                FightingSlimes.Add(k.gameObject);
+                foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                {
+                    k.enabled = true;
+                    k.GetComponent<DragSlime>().enabled = false;
+                    FightingSlimes.Add(k.gameObject);
+                }
+            }
+            else
+            {
+                foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                {
+                    k.ChangeState(SlimeBehaviour.State.Fight);
+                    FightingSlimes.Add(k.gameObject);
+                }
             }
             for (int i = TureDruation*10; i >= 0; i--)
             {
                 int Player1UnitsCount = 0;
                 int Player2UnitsCount = 0;
-                foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                if (Cleaner != null)
                 {
-                    if (k.PlayerID == 1) { Player1UnitsCount++; }
-                    if (k.PlayerID == 2) { Player2UnitsCount++; }
+                    foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                    {
+                        if (k.PlayerID == 1) { Player1UnitsCount++; }
+                        if (k.PlayerID == 2) { Player2UnitsCount++; }
+                    }
+                }
+                else
+                {
+                    foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                    {
+                        if (k.PlayerID == 1) { Player1UnitsCount++; }
+                        if (k.PlayerID == 2) { Player2UnitsCount++; }
+                    }
                 }
                 if ((Player1UnitsCount == 0 || Player2UnitsCount == 0)&&i>3) { i = 3; }
                 Timer.text = i.ToString();
                 yield return new WaitForSecondsRealtime(1);
             }
-            foreach (GameObject k in FightingSlimes)
+            if (Cleaner != null)
             {
-                k.SetActive(true);
-                k.GetComponent<SlimeMovement>().enabled = false;
-                k.GetComponent<DragSlime>().enabled = true;
-                //k.GetComponent<SlimeFightTmp>().Refresh();
+                foreach (GameObject k in FightingSlimes)
+                {
+                    k.SetActive(true);
+                    k.GetComponent<SlimeMovement>().enabled = false;
+                    k.GetComponent<DragSlime>().enabled = true;
+                    //k.GetComponent<SlimeFightTmp>().Refresh();
+                }
+            }
+            else
+            {
+                foreach (GameObject k in FightingSlimes)
+                {
+                    k.SetActive(true);
+                }
+                foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                {
+                    k.ChangeState(SlimeBehaviour.State.Prepare);
+                }
             }
 
             //Obrót o 90 stopni
@@ -122,7 +162,9 @@ public class PVPGameMenager : MonoBehaviour
             }
 
             //Obrót o -180 stopni
-            Cleaner.FastDrop();
+            if (Cleaner != null)
+            { Cleaner.FastDrop(); }
+            else { EQPlayer2.GetComponent<IventoryV5>().FastPut(); }
             CurrentStage = Stage.Rotate;
             HudPlayer2.SetActive(false);
             EQPlayer2.SetActive(false);
@@ -143,7 +185,9 @@ public class PVPGameMenager : MonoBehaviour
             }
 
             //Obrót o 90 stopni
-            Cleaner.FastDrop();
+            if (Cleaner != null)
+            { Cleaner.FastDrop(); }
+            else { EQPlayer1.GetComponent<IventoryV5>().FastPut(); }
             CurrentStage = Stage.Rotate;
             HudPlayer1.SetActive(false);
             EQPlayer1.SetActive(false);
@@ -155,32 +199,68 @@ public class PVPGameMenager : MonoBehaviour
 
             //Bitwa
             CurrentStage = Stage.Battle;
-            FightingSlimes.Clear();
-            foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+            FightingSlimes = new List<GameObject>();
+            if (Cleaner != null)
             {
-                k.enabled = true;
-                k.GetComponent<DragSlime>().enabled = false;
-                FightingSlimes.Add(k.gameObject);
+                foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                {
+                    k.enabled = true;
+                    k.GetComponent<DragSlime>().enabled = false;
+                    FightingSlimes.Add(k.gameObject);
+                }
+            }
+            else
+            {
+                foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                {
+                    k.ChangeState(SlimeBehaviour.State.Fight);
+                    FightingSlimes.Add(k.gameObject);
+                }
             }
             for (int i = TureDruation * 10; i >= 0; i--)
             {
                 int Player1UnitsCount = 0;
                 int Player2UnitsCount = 0;
-                foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                if (Cleaner != null)
                 {
-                    if (k.PlayerID == 1) { Player1UnitsCount++; }
-                    if (k.PlayerID == 2) { Player2UnitsCount++; }
+                    foreach (SlimeMovement k in GameObject.FindObjectsOfType<SlimeMovement>())
+                    {
+                        if (k.PlayerID == 1) { Player1UnitsCount++; }
+                        if (k.PlayerID == 2) { Player2UnitsCount++; }
+                    }
+                }
+                else
+                {
+                    foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                    {
+                        if (k.PlayerID == 1) { Player1UnitsCount++; }
+                        if (k.PlayerID == 2) { Player2UnitsCount++; }
+                    }
                 }
                 if ((Player1UnitsCount == 0 || Player2UnitsCount == 0) && i > 3) { i = 3; }
                 Timer.text = i.ToString();
                 yield return new WaitForSecondsRealtime(1);
             }
-            foreach (GameObject k in FightingSlimes)
+            if (Cleaner != null)
             {
-                k.SetActive(true);
-                k.GetComponent<SlimeMovement>().enabled = false;
-                k.GetComponent<DragSlime>().enabled = true;
-              //  k.GetComponent<SlimeFightTmp>().Refresh();
+                foreach (GameObject k in FightingSlimes)
+                {
+                    k.SetActive(true);
+                    k.GetComponent<SlimeMovement>().enabled = false;
+                    k.GetComponent<DragSlime>().enabled = true;
+                    //k.GetComponent<SlimeFightTmp>().Refresh();
+                }
+            }
+            else
+            {
+                foreach (GameObject k in FightingSlimes)
+                {
+                    k.SetActive(true);
+                }
+                    foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                {
+                    k.ChangeState(SlimeBehaviour.State.Prepare);
+                }
             }
 
             //Obrót o -90 stopni

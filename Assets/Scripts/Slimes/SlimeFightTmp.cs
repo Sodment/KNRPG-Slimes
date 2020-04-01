@@ -7,47 +7,101 @@ public class SlimeFightTmp : MonoBehaviour
 {
     public static float HP = 20;
     private float currentHP = HP;
+
     public float AttackSpeed = 1;
     public float dmg = 5;
-    public Image HealthBar;
-    float wait;
+    float Reload;
+    float reload;
+
     [SerializeField]
     private Canvas healthCanvas;
+    public Image HealthBar;
 
-    public SlimeFightTmp Enemy;
-    SlimeMovement Movement;
+    GameObject Enemy;
+
+    List<GameObject> PotentialEnemies = new List<GameObject>();
 
     private void Start()
     {
-        Movement = GetComponent<SlimeMovement>();
-        wait = 1.0f / AttackSpeed;
+        Reload = 1.0f / AttackSpeed;
         healthCanvas.enabled = false;
     }
 
     private void Update()
     {
-        if (Movement.Fight && Enemy != null)
+        if (reload > 0.0f)
         {
-            if (wait <= 0) 
+            reload -= Time.deltaTime;
+        }
+
+        if (Enemy!=null && Enemy.activeSelf == false)
+        {
+            if (PotentialEnemies.Contains(Enemy))
             {
-                Enemy.GetDMG(dmg);
-                wait= 1.0f / AttackSpeed;
+                PotentialEnemies.Remove(Enemy);
             }
-            else { wait -= Time.deltaTime; }
+
+            if (PotentialEnemies.Count > 0)
+            {
+                Enemy = PotentialEnemies[0];
+            }
+            else { Enemy = null; }
         }
-        if(HealthBar.fillAmount != 1)
+
+        if (Enemy != null && reload<=0.0f)
         {
-            healthCanvas.enabled = true;
+            Enemy.SendMessage("GetDMG", dmg);
+            reload = Reload;
         }
+
     }
 
     public void GetDMG(float dmg)
     {
         currentHP -= dmg;
         HealthBar.fillAmount = currentHP/HP;
+        if (HealthBar.fillAmount != 1)
+        {
+            healthCanvas.enabled = true;
+        }
         if (currentHP <= 0) {
-            GetComponent<SlimeMovement>().FreeNodes();
-            Destroy(gameObject);
+            GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Die);
+        }
+    }
+
+    public void Respawn()
+    {
+        currentHP = HP;
+        GetDMG(0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<SlimeBehaviour>())
+        {
+            if (collision.gameObject.GetComponent<SlimeBehaviour>().PlayerID != GetComponent<SlimeBehaviour>().PlayerID)
+            {
+                PotentialEnemies.Add(collision.gameObject);
+                if (Enemy == null)
+                { Enemy = collision.gameObject; }
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (PotentialEnemies.Contains(collision.gameObject))
+        {
+            PotentialEnemies.Remove(collision.gameObject);
+        }
+
+        if (collision.gameObject == Enemy)
+        {
+            if (PotentialEnemies.Count > 0)
+            {
+                Enemy = PotentialEnemies[0];
+            }
+            else { Enemy = null; }
         }
     }
 }

@@ -7,127 +7,164 @@ public class IventoryV5 : MonoBehaviour
     Transform DragObject;
     public int PlayerID;
     public GameObject SlimePrefab;
+    public GameObject[] Crystals;
     List<GameObject> MyItems = new List<GameObject>();
+
+    GameObject Highlighted;
 
     private void Awake()
     {
         foreach(Transform k in transform)
         {
-            GameObject GO = (GameObject)Instantiate(SlimePrefab, k.position, k.rotation);
+            if (k.name == "ReRoll") { continue; }
+            GameObject GO;
+            if (k.name == "UnitSlot")
+            {
+                GO = (GameObject)Instantiate(SlimePrefab, k.position, k.rotation);
+                GO.GetComponent<SlimeBehaviour>().PlayerID = PlayerID;
+            }
+            else { GO = (GameObject)Instantiate(Crystals[Random.Range(0,Crystals.Length)], k.position, k.rotation); }
             MyItems.Add(GO);
             GO.transform.parent = k;
             GO.transform.localScale = Vector3.one;
+
         }
     }
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit[] Hitinfo = Physics.RaycastAll(ray);
-        if (DragObject == null && Input.GetMouseButtonDown(0))
+        RaycastHit Hit;
+        if(Physics.Raycast(ray, out Hit))
         {
-            foreach (RaycastHit k in Hitinfo)
+            if(DragObject==null && Input.GetMouseButtonDown(0))
             {
-                if (MyItems.Contains(k.collider.gameObject))
+                if(MyItems.Contains(Hit.collider.gameObject))
                 {
-                    DragObject = k.collider.gameObject.transform;
+                    DragObject = Hit.collider.transform;
                     DragObject.GetComponent<Collider>().enabled = false;
-                    break;
                 }
             }
+
+            if (DragObject != null)
+            {
+                DragObject.position = Hit.point + Hit.collider.transform.up * 0.5f;
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    PutIt(Hit.collider.gameObject);
+                }
+            }
+
+            if (Hit.collider.gameObject != Highlighted)
+            {
+                Highlight(Hit.collider.gameObject);
+            }
         }
-
-        if (DragObject != null)
+        else
         {
-            DragObject.GetComponent<SmothPass>().enabled = false;
-            if (Mathf.Abs(DragObject.lossyScale.x - 0.3f) > 0.01f)
+            if (DragObject != null)
             {
-                DragObject.localScale += Vector3.one * ((DragObject.lossyScale.x < 0.3f) ? 1 : -1) * Time.deltaTime * 2.0f;
+                Vector3 Point = Camera.main.transform.position + ray.direction * (-1.0f*((Camera.main.transform.position.y+0.5f) / ray.direction.y));
+                DragObject.position = Point + Vector3.up * 0.5f;
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    DragObject.GetComponent<Collider>().enabled = true;
+                    DragObject = null;
+                }
             }
 
-            RaycastHit Hitinfotmp;
-            Physics.Raycast(ray,out Hitinfotmp);
-            DragObject.position = Hitinfotmp.point + Vector3.up * 0.5f;
-            if (Input.GetMouseButtonUp(0))
-            {
-                DragObject.GetComponent<SmothPass>().enabled = true;
-                PutIt(Hitinfo);
-            }
+            Highlight(null);
         }
     }
 
-    void PutIt(RaycastHit[] Info)
+    void PutIt(GameObject DropZone)
     {
-        Sorted(ref Info);
-        foreach(RaycastHit k in Info)
+        if (DragObject.tag == "Slime")
         {
-            if (k.collider.gameObject.name == "Plansza") { continue; }
-
-            if (MyItems.Contains(k.collider.gameObject))
+            if (MyItems.Contains(DropZone) && DropZone.tag!="Crystal")
             {
-                Transform tmp = DragObject.transform.parent;
-                DragObject.parent = k.collider.transform.parent;
-                k.collider.transform.parent = tmp;
-                DragObject.GetComponent<Collider>().enabled = true;
-                DragObject = null;
-                return;
+                Transform tmp = DragObject.parent;
+                DragObject.parent = DropZone.transform.parent;
+                DropZone.transform.parent = tmp;
             }
 
-            if (k.collider.transform.childCount > 0)
+            if (DropZone.transform.childCount > 0 && MyItems.Contains(DropZone.transform.GetChild(0).gameObject) && DropZone.transform.GetChild(0).tag!="Crystal")
             {
-                if (MyItems.Contains(k.collider.transform.GetChild(0).gameObject))
-                {
-                    if (k.collider.transform == DragObject.parent) { continue; }
-                    Transform tmp = DragObject.transform.parent;
-                    DragObject.parent = k.collider.transform;
-                    k.collider.transform.GetChild(0).parent = tmp;
-                    DragObject.GetComponent<Collider>().enabled = true;
-                    DragObject = null;
-                    return;
-                }
+                DropZone.transform.GetChild(0).parent = DragObject.parent;
+                DragObject.parent = DropZone.transform;
             }
 
-            if(k.collider.gameObject.name== "Node(Clone)" || k.collider.gameObject.name== "UnitSlot")
+            if (DropZone.name == "Node(Clone)" || DropZone.name == "UnitSlot")
             {
-                if (k.collider.transform.childCount == 0)
+                DragObject.parent = DropZone.transform;
+            }
+
+            DragObject.GetComponent<Collider>().enabled = true;
+            DragObject = null;
+        }
+        else if (DragObject.tag == "Crystal")
+        {
+            if (MyItems.Contains(DropZone))
+            {
+                if (DropZone.tag != "Slime")
                 {
-                    DragObject.parent = k.collider.transform;
-                    DragObject.GetComponent<Collider>().enabled = true;
-                    DragObject = null;
-                    return;
+                    Transform tmp = DragObject.parent;
+                    DragObject.parent = DropZone.transform.parent;
+                    DropZone.transform.parent = tmp;
                 }
                 else
                 {
-                    if (MyItems.Contains(k.collider.transform.GetChild(0).gameObject))
-                    {
-                        Transform tmp = DragObject.parent;
-                        DragObject.parent = k.collider.transform;
-                        k.collider.transform.GetChild(0).parent = tmp;
-                        DragObject.GetComponent<Collider>().enabled = true;
-                        DragObject = null;
-                        return;
-                    }
+                    DropZone.GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
                 }
             }
+
+            if (DropZone.transform.childCount > 0 && MyItems.Contains(DropZone.transform.GetChild(0).gameObject))
+            {
+                if (DropZone.transform.GetChild(0).tag == "Crystal")
+                {
+                    DropZone.transform.GetChild(0).parent = DragObject.parent;
+                    DragObject.parent = DropZone.transform;
+                }
+                else
+                {
+                    DropZone.transform.GetChild(0).GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
+                }
+            }
+            DragObject.GetComponent<Collider>().enabled = true;
+            DragObject = null;
         }
-       // DragObject.localPosition = Vector3.zero;
-        DragObject.GetComponent<Collider>().enabled = true;
-        DragObject = null;
     }
 
-    void Sorted(ref RaycastHit[] Data)
+    void Highlight(GameObject Object)
     {
-        List<RaycastHit> SortedData = new List<RaycastHit>();
-        List<RaycastHit> UnSortedData = new List<RaycastHit>();
-        UnSortedData.AddRange(Data);
+        if (Highlighted != null && Highlighted.GetComponent<Renderer>())
+        { Highlighted.GetComponent<Renderer>().material.color -= Color.white*0.2f; }
+        Highlighted = Object;
+        if (Highlighted != null && Highlighted.GetComponent<Renderer>())
+        { Highlighted.GetComponent<Renderer>().material.color += Color.white * 0.2f; }
+    }
 
-        SortedData.AddRange(UnSortedData.FindAll(k => MyItems.Contains(k.collider.gameObject)));
-        UnSortedData.RemoveAll(k => MyItems.Contains(k.collider.gameObject));
-        SortedData.AddRange(UnSortedData.FindAll(k => k.collider.transform.childCount>0 && MyItems.Contains(k.collider.transform.GetChild(0).gameObject)));
-        UnSortedData.RemoveAll(k => k.collider.transform.childCount>0 && MyItems.Contains(k.collider.transform.GetChild(0).gameObject));
-        SortedData.AddRange(UnSortedData.FindAll(k => k.collider.gameObject.name == "Node(Clone)" || k.collider.gameObject.name == "UnitSlot"));
-        UnSortedData.RemoveAll(k => k.collider.gameObject.name == "Node(Clone)" || k.collider.gameObject.name == "UnitSlot");
-        SortedData.AddRange(UnSortedData);
 
-        Data = SortedData.ToArray();
+    public void FastPut()
+    {
+        if (DragObject != null)
+        { DragObject.position = DragObject.transform.parent.position; }
+        DragObject = null;
+        Highlight(null);
+    }
+
+    public void ReRoll()
+    {
+        foreach (Transform k in transform)
+        {
+            if (k.name == "UnitSlot" || k.name=="ReRoll") { continue;  }
+            else if(k.childCount>0) { Destroy(k.GetChild(0).gameObject); }
+            GameObject GO = (GameObject)Instantiate(Crystals[Random.Range(0, Crystals.Length)], k.position, k.rotation); 
+            MyItems.Add(GO);
+            GO.transform.parent = k;
+            GO.transform.localScale = Vector3.one;
+
+        }
     }
 }
