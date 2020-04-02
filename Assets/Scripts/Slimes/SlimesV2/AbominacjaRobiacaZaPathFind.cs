@@ -21,7 +21,6 @@ public class AbominacjaRobiacaZaPathFind : MonoBehaviour
     {
         float MinimumDistance = float.MaxValue;
         Target = transform.position;
-        Vector3 Predirect = Vector3.zero;
         foreach(GameObject Slime in GameObject.FindGameObjectsWithTag("Slime"))
         {
             if (Slime.GetComponent<AbominacjaRobiacaZaPathFind>().PlayerID != PlayerID)
@@ -30,19 +29,16 @@ public class AbominacjaRobiacaZaPathFind : MonoBehaviour
                 if (dist < MinimumDistance)
                 {
                     Target = Slime.transform.position;
-                    Predirect= Slime.GetComponent<Rigidbody>().velocity * 10.0f * Time.deltaTime;
                     MinimumDistance = dist;
                 }
             }
         }
         if (Target == transform.position)
         {
-            //GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Prepare);
             RB.velocity = Vector3.zero;
             return;
         }
-        Vector3 root = Vector3.Cross((Target+Predirect - transform.position), ToCross);
+        Vector3 root = Vector3.Cross((Target - transform.position*2.0f), ToCross);
         RB.AddTorque(root*(0.5f+Mathf.Pow(MinimumDistance,1.7f)), ForceMode.Force);
-        RB.AddForce(-transform.position.normalized*Mathf.Pow(Vector3.Magnitude(transform.position),0.7f)+ToCross);
     }
 }

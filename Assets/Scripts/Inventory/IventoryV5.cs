@@ -43,6 +43,12 @@ public class IventoryV5 : MonoBehaviour
                     DragObject = Hit.collider.transform;
                     DragObject.GetComponent<Collider>().enabled = false;
                 }
+
+                if (Hit.collider.transform.childCount>0 && MyItems.Contains(Hit.collider.transform.GetChild(0).gameObject))
+                {
+                    DragObject = Hit.collider.transform.GetChild(0);
+                    DragObject.GetComponent<Collider>().enabled = false;
+                }
             }
 
             if (DragObject != null)
@@ -149,7 +155,10 @@ public class IventoryV5 : MonoBehaviour
     public void FastPut()
     {
         if (DragObject != null)
-        { DragObject.position = DragObject.transform.parent.position; }
+        { 
+            DragObject.position = DragObject.transform.parent.position;
+            DragObject.GetComponent<Collider>().enabled = true;
+        }
         DragObject = null;
         Highlight(null);
     }

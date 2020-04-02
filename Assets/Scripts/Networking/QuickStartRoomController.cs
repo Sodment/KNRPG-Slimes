@@ -5,7 +5,7 @@ using Photon.Realtime;
 public class QuickStartRoomController : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private int SceneIndex;
+    private int SceneIndex=0;
 
     public override void OnEnable()
     {

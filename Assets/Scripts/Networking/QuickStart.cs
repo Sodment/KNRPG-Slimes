@@ -7,11 +7,11 @@ using UnityEngine;
 public class QuickStart : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private GameObject StartButton;
+    private GameObject StartButton=null;
     [SerializeField]
-    private GameObject CancelButton;
+    private GameObject CancelButton=null;
     [SerializeField]
-    private int RoomSize;
+    private int RoomSize=2;
    
     public override void OnConnectedToMaster()
     {

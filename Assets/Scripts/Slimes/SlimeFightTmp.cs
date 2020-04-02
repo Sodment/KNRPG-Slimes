@@ -14,7 +14,7 @@ public class SlimeFightTmp : MonoBehaviour
     float reload;
 
     [SerializeField]
-    private Canvas healthCanvas;
+    private Canvas healthCanvas=null;
     public Image HealthBar;
 
     GameObject Enemy;
@@ -25,6 +25,12 @@ public class SlimeFightTmp : MonoBehaviour
     {
         Reload = 1.0f / AttackSpeed;
         healthCanvas.enabled = false;
+    }
+
+    private void OnDisable()
+    {
+        PotentialEnemies.Clear();
+        Enemy = null;
     }
 
     private void Update()
