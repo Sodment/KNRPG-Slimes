@@ -165,6 +165,7 @@ public class IventoryV5 : MonoBehaviour
 
     public void ReRoll()
     {
+        if (this.enabled == false) { return; }
         foreach (Transform k in transform)
         {
             if (k.name == "UnitSlot" || k.name=="ReRoll") { continue;  }

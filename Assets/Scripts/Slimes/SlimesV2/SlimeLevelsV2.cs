@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlimeLevelsV2 : MonoBehaviour
 {
-    List<Crystal> Crystals = new List<Crystal>();
+   // List<Crystal> Crystals = new List<Crystal>(); Z tego by była tylko długość... dokładnie taka sama jak z colors
     List<Color> Colors = new List<Color>();
 
     float Attack;

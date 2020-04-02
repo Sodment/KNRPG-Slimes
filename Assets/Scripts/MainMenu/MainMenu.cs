@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void Play()
     {
-        SceneManager.LoadScene(1);//Póżnej indeks zmienimy na nazwę sceny
+        SceneManager.LoadScene("TestEkwipunku");//Póżnej indeks zmienimy na nazwę sceny
     }
 
     public void PlayOnline()
