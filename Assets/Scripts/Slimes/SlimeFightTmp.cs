@@ -30,6 +30,7 @@ public class SlimeFightTmp : MonoBehaviour
     private void OnDisable()
     {
         PotentialEnemies.Clear();
+        healthCanvas.enabled = false;
         Enemy = null;
     }
 
@@ -66,9 +67,13 @@ public class SlimeFightTmp : MonoBehaviour
     {
         currentHP -= dmg;
         HealthBar.fillAmount = currentHP/HP;
-        if (HealthBar.fillAmount != 1)
+        if (HealthBar.fillAmount != 1.0f)
         {
             healthCanvas.enabled = true;
+        }
+        else
+        {
+            healthCanvas.enabled = false;
         }
         if (currentHP <= 0) {
             GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Die);

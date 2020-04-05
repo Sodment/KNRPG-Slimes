@@ -15,8 +15,8 @@ public class InstantiateObjects : MonoBehaviour
 
     public void InstantiateObject(GameObject obj)
     {
-        int Type = obj.GetComponent<SlimeLevels>().Type;
-        int Level = obj.GetComponent<SlimeLevels>().LVL;
-        MyView.RPC("RPC_InstantiateObject", RpcTarget.All, obj.transform.position, obj.transform.rotation.eulerAngles, Type, Level, MyView.ViewID);
+        //int Type = obj.GetComponent<SlimeLevels>().Type;
+        //int Level = obj.GetComponent<SlimeLevels>().LVL;
+        //MyView.RPC("RPC_InstantiateObject", RpcTarget.All, obj.transform.position, obj.transform.rotation.eulerAngles, Type, Level, MyView.ViewID);
     }
 }

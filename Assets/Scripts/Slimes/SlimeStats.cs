@@ -27,7 +27,6 @@ public class SlimeStats : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            GetComponent<SlimeMovement>().FreeNodes();
             Destroy(gameObject);
         }
     }

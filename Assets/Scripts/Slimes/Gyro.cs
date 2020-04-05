@@ -13,6 +13,7 @@ public class Gyro : MonoBehaviour
     }
     void Update()
     {
-        transform.rotation = Quaternion.LookRotation(TargetData.Target - transform.position, Up);
+        if (TargetData.Target != transform.position)
+        { transform.rotation = Quaternion.LookRotation(TargetData.Target - transform.position, Up); }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SlimeBehaviour : MonoBehaviour
 {
@@ -11,14 +10,14 @@ public class SlimeBehaviour : MonoBehaviour
 
     SmothPass PrepareScript;
     AbominacjaRobiacaZaPathFind MoveScript;
-    SlimeFight FightScript;
+    SlimeFightTmp FightScript;
     Rigidbody RB;
 
     private void Awake()
     {
         PrepareScript = GetComponent<SmothPass>();
         MoveScript = GetComponent<AbominacjaRobiacaZaPathFind>();
-        FightScript = GetComponent<SlimeFight>();
+        FightScript = GetComponent<SlimeFightTmp>();
         RB = GetComponent<Rigidbody>();
         ChangeState(CurrentState);
     }
