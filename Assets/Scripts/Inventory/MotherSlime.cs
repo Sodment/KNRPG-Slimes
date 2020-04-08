@@ -29,7 +29,7 @@ public class MotherSlime : MonoBehaviour
         {
             if (k.childCount > 0) { continue; }
             Vector3 Diff = k.position - transform.position;
-            float Dist = Mathf.Abs(Diff.x) + Mathf.Abs(Diff.z) * 100.0f;
+            float Dist = Mathf.Abs(Diff.x) + Diff.z * ((PlayerID == 1) ? 100.0f:-100.0f) ;
             if (Dist < MinDist)
             {
                 MinDist = Dist;
