@@ -6,9 +6,11 @@ public class IventoryV5 : MonoBehaviour
 {
     Transform DragObject;
     public int PlayerID;
+    public PVPGameMenager.Stage Player;
     public GameObject SlimePrefab;
     public GameObject[] Crystals;
     List<GameObject> MyItems = new List<GameObject>();
+    List<GameObject> MyNodes = new List<GameObject>();
 
     GameObject Highlighted;
 
@@ -27,7 +29,14 @@ public class IventoryV5 : MonoBehaviour
             MyItems.Add(GO);
             GO.transform.parent = k;
             GO.transform.localScale = Vector3.one;
+        }
 
+        foreach(Transform k in GameObject.Find("Plansza").transform)
+        {
+            if((Player== PVPGameMenager.Stage.Player1 && k.position.z<-2.0f)||(Player==PVPGameMenager.Stage.Player2 && k.position.z > 2.0f))
+            {
+                MyNodes.Add(k.gameObject);
+            }
         }
     }
     void Update()
@@ -101,7 +110,7 @@ public class IventoryV5 : MonoBehaviour
                 DragObject.parent = DropZone.transform;
             }
 
-            if (DropZone.name == "Node(Clone)" || DropZone.name == "UnitSlot")
+            if (MyNodes.Contains(DropZone) || DropZone.name == "UnitSlot")
             {
                 DragObject.parent = DropZone.transform;
             }
@@ -109,6 +118,7 @@ public class IventoryV5 : MonoBehaviour
             DragObject.GetComponent<Collider>().enabled = true;
             DragObject = null;
         }
+
         else if (DragObject.tag == "Crystal")
         {
             if (MyItems.Contains(DropZone))
@@ -125,7 +135,7 @@ public class IventoryV5 : MonoBehaviour
                 }
             }
 
-            if (DropZone.transform.childCount > 0 && MyItems.Contains(DropZone.transform.GetChild(0).gameObject))
+            if (DropZone.transform.childCount > 0 && MyItems.Contains(DropZone.transform.GetChild(0).gameObject) && DropZone.name != "King")
             {
                 if (DropZone.transform.GetChild(0).tag == "Crystal")
                 {
@@ -136,6 +146,11 @@ public class IventoryV5 : MonoBehaviour
                 {
                     DropZone.transform.GetChild(0).GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
                 }
+            }
+
+            if (DropZone.name == "King" && DropZone.GetComponent<MotherSlime>().PlayerID==PlayerID)
+            {
+                DropZone.GetComponent<MotherSlime>().AddCrystal(DragObject.GetComponent<Crystal>());
             }
             DragObject.GetComponent<Collider>().enabled = true;
             DragObject = null;
@@ -175,6 +190,21 @@ public class IventoryV5 : MonoBehaviour
             GO.transform.parent = k;
             GO.transform.localScale = Vector3.one;
 
+        }
+    }
+
+    private void OnEnable()
+    {
+        foreach(GameObject k in MyNodes)
+        {
+            k.GetComponent<Renderer>().material.color += Color.white * 0.1f;
+        }
+    }
+    private void OnDisable()
+    {
+        foreach (GameObject k in MyNodes)
+        {
+            k.GetComponent<Renderer>().material.color -= Color.white * 0.1f;
         }
     }
 }

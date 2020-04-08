@@ -10,4 +10,5 @@ public class Crystal : MonoBehaviour
     public float AttackSpeedBonus;
     public float HealthBonus;
     public float MovmentSpeedBonus;
+
 }
