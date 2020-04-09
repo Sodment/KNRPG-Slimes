@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlimeFightTmp : MonoBehaviour
+public class SlimeFight : MonoBehaviour
 {
-    public static float HP = 20;
-    private float currentHP = HP;
-
-    public float AttackSpeed = 1;
-    public float dmg = 5;
+    private float currenthp;
     float Reload;
     float reload;
 
     [SerializeField]
-    private Canvas healthCanvas=null;
+    private Canvas healthCanvas = null;
     public Image HealthBar;
 
     GameObject Enemy;
@@ -23,19 +19,19 @@ public class SlimeFightTmp : MonoBehaviour
 
     private void Start()
     {
-        Reload = 1.0f / AttackSpeed;
-        healthCanvas.enabled = false;
+        Reload = 1.0f / GetComponent<SlimeLevelsV2>().AttackSpeed;
+        currenthp = GetComponent<SlimeLevelsV2>().Health;
     }
 
     private void OnDisable()
     {
         PotentialEnemies.Clear();
-        healthCanvas.enabled = false;
         Enemy = null;
     }
 
     private void Update()
     {
+        HealthBar.fillAmount = currenthp / GetComponent<SlimeLevelsV2>().Health;
         if (reload > 0.0f)
         {
             reload -= Time.deltaTime;
@@ -57,33 +53,19 @@ public class SlimeFightTmp : MonoBehaviour
 
         if (Enemy != null && reload<=0.0f)
         {
-            Enemy.SendMessage("GetDMG", dmg);
+            Enemy.GetComponent<SlimeFight>().currenthp -= GetComponent<SlimeLevelsV2>().Attack;
+            Debug.Log(name + " " + Enemy.name);
             reload = Reload;
         }
-
-    }
-
-    public void GetDMG(float dmg)
-    {
-        currentHP -= dmg;
-        HealthBar.fillAmount = currentHP/HP;
-        if (HealthBar.fillAmount != 1.0f)
+        if (currenthp <= 0)
         {
-            healthCanvas.enabled = true;
-        }
-        else
-        {
-            healthCanvas.enabled = false;
-        }
-        if (currentHP <= 0) {
             GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Die);
         }
-    }
 
+    }
     public void Respawn()
     {
-        currentHP = HP;
-        GetDMG(0);
+        currenthp = GetComponent<SlimeLevelsV2>().Health;
     }
 
     private void OnCollisionEnter(Collision collision)

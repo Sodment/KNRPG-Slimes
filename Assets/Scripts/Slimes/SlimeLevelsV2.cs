@@ -7,10 +7,10 @@ public class SlimeLevelsV2 : MonoBehaviour
    // List<Crystal> Crystals = new List<Crystal>(); Z tego by była tylko długość... dokładnie taka sama jak z colors
     List<Color> Colors = new List<Color>();
 
-    float Attack;
-    float AttackSpeed;
-    float Health;
-    float MovmentSpeed;
+    public float Attack = 10;
+    public float AttackSpeed = 0.3F;
+    public float Health = 50;
+    public float MovmentSpeed = 0.3F;
 
     int[] Typ = new int[4];
 

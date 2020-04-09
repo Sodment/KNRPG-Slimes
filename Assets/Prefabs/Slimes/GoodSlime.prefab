@@ -680,9 +680,9 @@ GameObject:
   - component: {fileID: -1831142372807387420}
   - component: {fileID: 6500271033661769224}
   - component: {fileID: -8798383497449820550}
-  - component: {fileID: 3219748572271797276}
   - component: {fileID: 8881986046391375211}
   - component: {fileID: 2145027520835877715}
+  - component: {fileID: 9077480776681595307}
   m_Layer: 0
   m_Name: GoodSlime
   m_TagString: Slime
@@ -747,6 +747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 1
+  healthCanva: {fileID: 3967085074348107869}
 --- !u!114 &-8798383497449820550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,22 +761,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {x: 0, y: 0, z: 0}
---- !u!114 &3219748572271797276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8737038886548944193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e7c4053af2f95f48a953e0a77b4031e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttackSpeed: 1
-  dmg: 5
-  healthCanvas: {fileID: 3967085074348107869}
-  HealthBar: {fileID: 2856912698222083556}
 --- !u!114 &8881986046391375211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,3 +785,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a97ca30869aa14b809335ad8403a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Attack: 10
+  AttackSpeed: 0.3
+  Health: 50
+  MovmentSpeed: 0.3
+--- !u!114 &9077480776681595307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8737038886548944193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b47165200e2e88439ed3975a92eaa63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthCanvas: {fileID: 3967085074348107869}
+  HealthBar: {fileID: 2856912698222083556}

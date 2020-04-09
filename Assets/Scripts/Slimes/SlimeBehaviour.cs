@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SlimeBehaviour : MonoBehaviour
 {
     public int PlayerID;
@@ -10,16 +10,19 @@ public class SlimeBehaviour : MonoBehaviour
 
     SmothPass PrepareScript;
     AbominacjaRobiacaZaPathFind MoveScript;
-    SlimeFightTmp FightScript;
+    SlimeFight FightScript;
     Rigidbody RB;
+    [SerializeField]
+    private Canvas healthCanva = null;
 
     private void Awake()
     {
         PrepareScript = GetComponent<SmothPass>();
         MoveScript = GetComponent<AbominacjaRobiacaZaPathFind>();
-        FightScript = GetComponent<SlimeFightTmp>();
+        FightScript = GetComponent<SlimeFight>();
         RB = GetComponent<Rigidbody>();
         ChangeState(CurrentState);
+        healthCanva.enabled = false;
     }
 
     public void ChangeState(State NewState)
@@ -36,6 +39,7 @@ public class SlimeBehaviour : MonoBehaviour
                     FightScript.Respawn();
                     FightScript.enabled = false;
                     RB.isKinematic = true;
+                    healthCanva.enabled = false;
                     break; 
                 }
             case State.Fight:
@@ -44,6 +48,7 @@ public class SlimeBehaviour : MonoBehaviour
                     MoveScript.enabled = true;
                     FightScript.enabled = true;
                     RB.isKinematic = false;
+                    healthCanva.enabled = true;
                     break;
                 }
             case State.Die:
