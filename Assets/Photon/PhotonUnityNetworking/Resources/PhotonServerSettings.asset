@@ -33,5 +33,9 @@ MonoBehaviour:
   - DestroyRpc
   - RPC_InstantiateObject
   - AddPlayer
+  - PutSlime
+  - RemoveSlime
+  - PutCrystal
+  - UpdateUnitPosition
   DisableAutoOpenWizard: 1
   ShowSettings: 1

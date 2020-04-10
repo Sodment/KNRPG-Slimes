@@ -14,16 +14,19 @@ public class IventoryV5 : MonoBehaviour
 
     GameObject Highlighted;
 
-    private void Awake()
+    private void Start()
     {
+        int i = 0;
+        string PlayerName = (Player == PVPGameMenager.Stage.Player1) ? "Player1_" : "Player2_";
         foreach(Transform k in transform)
         {
-            if (k.name == "ReRoll") { continue; }
             GameObject GO;
             if (k.name == "UnitSlot")
             {
                 GO = (GameObject)Instantiate(SlimePrefab, k.position, k.rotation);
                 GO.GetComponent<SlimeBehaviour>().PlayerID = PlayerID;
+                GO.GetComponent<SlimeBehaviour>().UnitID = PlayerName + i.ToString();
+                i++;
             }
             else { GO = (GameObject)Instantiate(Crystals[Random.Range(0,Crystals.Length)], k.position, k.rotation); }
             MyItems.Add(GO);
@@ -38,6 +41,8 @@ public class IventoryV5 : MonoBehaviour
                 MyNodes.Add(k.gameObject);
             }
         }
+
+        OnEnable();
     }
     void Update()
     {
@@ -97,6 +102,7 @@ public class IventoryV5 : MonoBehaviour
     {
         if (DragObject.tag == "Slime")
         {
+
             if (MyItems.Contains(DropZone) && DropZone.tag!="Crystal")
             {
                 Transform tmp = DragObject.parent;
@@ -104,13 +110,19 @@ public class IventoryV5 : MonoBehaviour
                 DropZone.transform.parent = tmp;
             }
 
-            if (DropZone.transform.childCount > 0 && MyItems.Contains(DropZone.transform.GetChild(0).gameObject) && DropZone.transform.GetChild(0).tag!="Crystal")
+
+            if (DropZone.transform.childCount > 0 && MyItems.Contains(DropZone.transform.GetChild(0).gameObject) && DropZone.transform.GetChild(0).tag != "Crystal")
             {
                 DropZone.transform.GetChild(0).parent = DragObject.parent;
                 DragObject.parent = DropZone.transform;
             }
 
-            if (MyNodes.Contains(DropZone) || DropZone.name == "UnitSlot")
+            if (MyNodes.Contains(DropZone))
+            {
+                DragObject.parent = DropZone.transform;
+            }
+
+            if (DropZone.name == "UnitSlot")
             {
                 DragObject.parent = DropZone.transform;
             }
@@ -132,6 +144,11 @@ public class IventoryV5 : MonoBehaviour
                 else
                 {
                     DropZone.GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
+                    if (GetComponent<InventoryNetworkingAssistance>() != null && DropZone.transform.parent.name!="UnitSlot")
+                    {
+                        GetComponent<InventoryNetworkingAssistance>().PutCrystal(DropZone.GetComponent<SlimeBehaviour>().UnitID, DragObject.GetComponent<Crystal>().Type);
+                    }
+                    Destroy(DragObject.gameObject);
                 }
             }
 
@@ -145,15 +162,24 @@ public class IventoryV5 : MonoBehaviour
                 else
                 {
                     DropZone.transform.GetChild(0).GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
+                    if (GetComponent<InventoryNetworkingAssistance>() != null && DropZone.name!="UnitSlot")
+                    {
+                        GetComponent<InventoryNetworkingAssistance>().PutCrystal(DropZone.transform.GetChild(0).GetComponent<SlimeBehaviour>().UnitID, DragObject.GetComponent<Crystal>().Type);
+                    }
+                    Destroy(DragObject.gameObject);
                 }
             }
 
-            if (DropZone.name == "King" && DropZone.GetComponent<MotherSlime>().PlayerID==PlayerID)
+            if (DropZone.name == "King" && DropZone.GetComponent<MotherSlime>().Player==this)
             {
                 DropZone.GetComponent<MotherSlime>().AddCrystal(DragObject.GetComponent<Crystal>());
             }
-            DragObject.GetComponent<Collider>().enabled = true;
-            DragObject = null;
+
+            if (DragObject != null)
+            {
+                DragObject.GetComponent<Collider>().enabled = true;
+                DragObject = null;
+            }
         }
     }
 
@@ -206,5 +232,12 @@ public class IventoryV5 : MonoBehaviour
         {
             k.GetComponent<Renderer>().material.color -= Color.white * 0.1f;
         }
+    }
+
+
+    public void AddItem(GameObject Item)
+    {
+        Item.GetComponent<SlimeBehaviour>().UnitID = ((Player == PVPGameMenager.Stage.Player1) ? "Player1_" : "Player2_") + MyItems.Count.ToString();
+        MyItems.Add(Item);
     }
 }

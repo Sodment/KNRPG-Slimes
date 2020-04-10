@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestEkwipunku.unity
     guid: fe4c3f817b37c414d8feb0407f0a2dfc
+  - enabled: 1
+    path: Assets/Scenes/NetworkingTestScene.unity
+    guid: 39a4d318861c9464e9d002ecd6b5dae2
   m_configObjects: {}

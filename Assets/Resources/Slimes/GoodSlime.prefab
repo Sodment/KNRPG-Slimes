@@ -365,7 +365,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1e48596b063e6a640a6ecea338caa8f2, type: 2}
+  - {fileID: 2100000, guid: 5503751b688c28a4fa314463e1341e00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -748,6 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerID: 1
   healthCanva: {fileID: 3967085074348107869}
+  UnitID: 
 --- !u!114 &-8798383497449820550
 MonoBehaviour:
   m_ObjectHideFlags: 0

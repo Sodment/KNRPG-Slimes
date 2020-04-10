@@ -1,59 +1,43 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine.UI;
 
 public class QuickStart : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    private GameObject StartButton=null;
-    [SerializeField]
-    private GameObject CancelButton=null;
-    [SerializeField]
-    private int RoomSize=2;
-   
-    public override void OnConnectedToMaster()
+    public Text RoomName;
+    public override void OnJoinedLobby()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
-        StartButton.SetActive(true);
+        RoomName.text = "Joined Lobby";
     }
 
-    public void QuickStartButton()
+    public void OnClick_OnlinePlay()
     {
-        StartButton.SetActive(false);
-        CancelButton.SetActive(true);
+        if(!PhotonNetwork.InLobby) { return; }
+
+        Debug.Log("Try join to Random room");
         PhotonNetwork.JoinRandomRoom();
-    }
-
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        Debug.Log("Failed! Room doesn't exist");
-        CreateRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("Fail connect");
-        CreateRoom();
+        Debug.Log("Any free room");
+        string Name = "Room" + Random.Range(0, 10000).ToString();
+        RoomOptions Options = new RoomOptions();
+        Options.MaxPlayers = 2;
+        Options.IsOpen = true;
+        Options.PlayerTtl = 10;
+        PhotonNetwork.JoinOrCreateRoom(Name, Options, TypedLobby.Default);
     }
 
-    void CreateRoom()
+    public override void OnJoinedRoom()
     {
-        int RandomRoomNumber = Random.Range(0, 1000);
-        RoomOptions RoomSet = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)RoomSize };
-        PhotonNetwork.CreateRoom("Room"+RandomRoomNumber, RoomSet);
-    }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        CreateRoom();
-    }
-
-    public void QuickCancelButton()
-    {
-        StartButton.SetActive(true);
-        CancelButton.SetActive(false);
-        PhotonNetwork.LeaveRoom();
+        RoomName.text = PhotonNetwork.NickName + "\n" + PhotonNetwork.CurrentRoom.Name;
+        if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            RoomName.text = "Prepare";
+        }
     }
 }

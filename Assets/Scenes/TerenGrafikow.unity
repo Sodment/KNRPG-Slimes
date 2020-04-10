@@ -2199,7 +2199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7890c4e13a1b0c4e972f9a7dde29a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerID: 2
+  Player: {fileID: 1807071571}
   SlimePref: {fileID: 8737038886548944193, guid: e69cf8efe86129548830889b4175c298,
     type: 3}
 --- !u!135 &773210240
@@ -2678,7 +2678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7890c4e13a1b0c4e972f9a7dde29a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerID: 1
+  Player: {fileID: 1191768979}
   SlimePref: {fileID: 8737038886548944193, guid: e69cf8efe86129548830889b4175c298,
     type: 3}
 --- !u!135 &909223909
