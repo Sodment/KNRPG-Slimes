@@ -6,7 +6,6 @@ public class IventoryV5 : MonoBehaviour
 {
     Transform DragObject;
     public int PlayerID;
-    public PVPGameMenager.Stage Player;
     public GameObject SlimePrefab;
     public GameObject[] Crystals;
     List<GameObject> MyItems = new List<GameObject>();
@@ -17,7 +16,8 @@ public class IventoryV5 : MonoBehaviour
     private void Start()
     {
         int i = 0;
-        string PlayerName = (Player == PVPGameMenager.Stage.Player1) ? "Player1_" : "Player2_";
+        string PlayerName = "Player"+PlayerID.ToString()+"_Unit";
+
         foreach(Transform k in transform)
         {
             GameObject GO;
@@ -36,7 +36,7 @@ public class IventoryV5 : MonoBehaviour
 
         foreach(Transform k in GameObject.Find("Plansza").transform)
         {
-            if((Player== PVPGameMenager.Stage.Player1 && k.position.z<-2.0f)||(Player==PVPGameMenager.Stage.Player2 && k.position.z > 2.0f))
+            if((PlayerID==1 && k.position.z<-2.0f)||(PlayerID!=1 && k.position.z > 2.0f))
             {
                 MyNodes.Add(k.gameObject);
             }
@@ -144,9 +144,9 @@ public class IventoryV5 : MonoBehaviour
                 else
                 {
                     DropZone.GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
-                    if (GetComponent<InventoryNetworkingAssistance>() != null && DropZone.transform.parent.name!="UnitSlot")
+                    if (GetComponentInParent<InventoryNetworkingAssistance>() != null && DropZone.transform.parent.name!="UnitSlot")
                     {
-                        GetComponent<InventoryNetworkingAssistance>().PutCrystal(DropZone.GetComponent<SlimeBehaviour>().UnitID, DragObject.GetComponent<Crystal>().Type);
+                        GetComponentInParent<InventoryNetworkingAssistance>().PutCrystal(DropZone.GetComponent<SlimeBehaviour>().UnitID, DragObject.GetComponent<Crystal>().Type);
                     }
                     Destroy(DragObject.gameObject);
                 }
@@ -162,9 +162,9 @@ public class IventoryV5 : MonoBehaviour
                 else
                 {
                     DropZone.transform.GetChild(0).GetComponent<SlimeLevelsV2>().AddCrystal(DragObject.GetComponent<Crystal>());
-                    if (GetComponent<InventoryNetworkingAssistance>() != null && DropZone.name!="UnitSlot")
+                    if (GetComponentInParent<InventoryNetworkingAssistance>() != null && DropZone.name!="UnitSlot")
                     {
-                        GetComponent<InventoryNetworkingAssistance>().PutCrystal(DropZone.transform.GetChild(0).GetComponent<SlimeBehaviour>().UnitID, DragObject.GetComponent<Crystal>().Type);
+                        GetComponentInParent<InventoryNetworkingAssistance>().PutCrystal(DropZone.transform.GetChild(0).GetComponent<SlimeBehaviour>().UnitID, DragObject.GetComponent<Crystal>().Type);
                     }
                     Destroy(DragObject.gameObject);
                 }
@@ -223,21 +223,23 @@ public class IventoryV5 : MonoBehaviour
     {
         foreach(GameObject k in MyNodes)
         {
-            k.GetComponent<Renderer>().material.color += Color.white * 0.1f;
+            int color = Mathf.RoundToInt(Mathf.Abs(k.transform.position.x + k.transform.position.z)) % 2;
+            k.GetComponent<Renderer>().material.color += Color.white * 0.15f * ((color == 1) ? 1.0f : -1.0f);
         }
     }
     private void OnDisable()
     {
         foreach (GameObject k in MyNodes)
         {
-            k.GetComponent<Renderer>().material.color -= Color.white * 0.1f;
+            int color = Mathf.RoundToInt(Mathf.Abs(k.transform.position.x + k.transform.position.z)) % 2;
+            k.GetComponent<Renderer>().material.color -= Color.white * 0.15f *((color==1)?1.0f:-1.0f);
         }
     }
 
 
     public void AddItem(GameObject Item)
     {
-        Item.GetComponent<SlimeBehaviour>().UnitID = ((Player == PVPGameMenager.Stage.Player1) ? "Player1_" : "Player2_") + MyItems.Count.ToString();
+        Item.GetComponent<SlimeBehaviour>().UnitID = "Player" + PlayerID.ToString() + "_Unit" + MyItems.Count.ToString();
         MyItems.Add(Item);
     }
 }

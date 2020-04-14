@@ -7,34 +7,34 @@ public class InventoryNetworkingAssistance : MonoBehaviour
 {
     PhotonView PV;
 
-    private void Start()
+    private void Awake()
     {
         PV = GetComponent<PhotonView>();
     }
 
     public void Drop(GameObject Object)
     {
-        if (PV == null) { Debug.Log("PhotonView is null"); Start(); }
+        if (PV == null) { Debug.Log("PhotonView is null"); Awake(); }
         else
         {
             Debug.Log("Wysłano");
-            PV.RPC("PutSlime", RpcTarget.Others, Object.transform.position.x, Object.transform.position.y, Object.transform.position.z, PV.ViewID, Object.GetComponent<SlimeBehaviour>().UnitID, Object.GetComponent<SlimeLevelsV2>().Crystals());
+            PV.RPC("PutSlime", RpcTarget.Others, Object.transform.position.x, Object.transform.position.y, Object.transform.position.z, Object.GetComponent<SlimeBehaviour>().PlayerID, Object.GetComponent<SlimeBehaviour>().UnitID, Object.GetComponent<SlimeLevelsV2>().Crystals());
         }
     }
 
     public void Drop(GameObject Object, Vector3 Parent)
     {
-        if (PV == null) { Debug.Log("PhotonView is null"); Start(); }
+        if (PV == null) { Debug.Log("PhotonView is null"); Awake(); }
         else
         {
             Debug.Log("Wysłano");
-            PV.RPC("PutSlime", RpcTarget.Others, Parent.x, Parent.y, Parent.z, PV.ViewID, Object.GetComponent<SlimeBehaviour>().UnitID, Object.GetComponent<SlimeLevelsV2>().Crystals());
+            PV.RPC("PutSlime", RpcTarget.Others, Parent.x, Parent.y, Parent.z, Object.GetComponent<SlimeBehaviour>().PlayerID, Object.GetComponent<SlimeBehaviour>().UnitID, Object.GetComponent<SlimeLevelsV2>().Crystals());
         }
     }
 
     public void Remove(string UnitID)
     {
-        if (PV == null) { Debug.Log("PhotonView is null"); Start(); }
+        if (PV == null) { Debug.Log("PhotonView is null"); Awake(); }
         else
         {
             Debug.Log("Wysłano");
@@ -44,7 +44,7 @@ public class InventoryNetworkingAssistance : MonoBehaviour
 
     public void PutCrystal(string UnitID, int CrystalType)
     {
-        if (PV == null) { Debug.Log("PhotonView is null"); Start(); }
+        if (PV == null) { Debug.Log("PhotonView is null"); Awake(); }
         else
         {
             Debug.Log("Wysłano");
@@ -55,7 +55,7 @@ public class InventoryNetworkingAssistance : MonoBehaviour
 
     public void UpdateUnitPosition(string UnitID, float x, float y, float z)
     {
-        if (PV == null) { Debug.Log("PhotonView is null"); Start(); }
+        if (PV == null) { Debug.Log("PhotonView is null"); Awake(); }
         else
         {
             Debug.Log("Wysłano");

@@ -39,5 +39,9 @@ public class QuickStart : MonoBehaviourPunCallbacks
         {
             RoomName.text = "Prepare";
         }
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer);
+        }
     }
 }

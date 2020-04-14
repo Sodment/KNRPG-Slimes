@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class MotherSlime : MonoBehaviour
 {
-    public PVPGameMenager.Stage Owner;
     public IventoryV5 Player;
     public GameObject SlimePref;
     List<Crystal> Crystals = new List<Crystal>();
 
     public void AddCrystal(Crystal crystal)
     {
-        if (Owner != Player.Player) { Destroy(this); return; }
         Crystals.Add(crystal);
         crystal.transform.parent = transform;
         crystal.transform.position = Vector3.down * 50.0f;
@@ -31,7 +29,7 @@ public class MotherSlime : MonoBehaviour
         {
             if (k.childCount > 0) { continue; }
             Vector3 Diff = k.position - transform.position;
-            float Dist = Mathf.Abs(Diff.x) + Diff.z * ((Owner == PVPGameMenager.Stage.Player1) ? 100.0f:-100.0f) ;
+            float Dist = Mathf.Abs(Diff.x) + Diff.z;// * ((Owner == PVPGameMenager.Stage.Player1) ? 100.0f:-100.0f) ;
             if (Dist < MinDist)
             {
                 MinDist = Dist;
@@ -56,4 +54,29 @@ public class MotherSlime : MonoBehaviour
         { Player.GetComponent<InventoryNetworkingAssistance>().Drop(GO, DropZone.transform.position); }
     }
 
+    public void GetDMG()
+    {
+        Debug.Log("GetDMG");
+        Destroy(transform.GetChild(0).gameObject);
+        List<Transform> Crystals = new List<Transform>();
+        Crystals.AddRange( transform.GetComponentsInChildren<Transform>());
+        if (Crystals.Contains(transform))
+        {
+            Crystals.Remove(transform);
+        }
+        float AngleDiffrence = 360.0f / (Crystals.Count-1)*Mathf.Deg2Rad;
+        for(int i=0; i<Crystals.Count; i++)
+        {
+            Crystals[i].localPosition = new Vector3(Mathf.Sin(AngleDiffrence * i), 0.0f, Mathf.Cos(AngleDiffrence * i));
+        }
+    }
+
+
+    private void OnDestroy()
+    {
+        foreach(Transform k in transform)
+        {
+            Destroy(k.gameObject);
+        }
+    }
 }
