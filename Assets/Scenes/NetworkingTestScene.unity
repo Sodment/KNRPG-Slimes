@@ -9982,7 +9982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Timer: {fileID: 15414043}
-  PrepareDruation: 4
+  PrepareDruation: 20
 --- !u!114 &1146882538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15518,6 +15518,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: podest (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6796242577904766953, guid: ddb8da910f556784fabd42a878731269,
+        type: 3}
+      propertyPath: m_Name
+      value: MasterReRoll
+      objectReference: {fileID: 0}
     - target: {fileID: 6796242578533118164, guid: ddb8da910f556784fabd42a878731269,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15572,11 +15577,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6796242577904766953, guid: ddb8da910f556784fabd42a878731269,
-        type: 3}
-      propertyPath: m_Name
-      value: MasterReRoll
       objectReference: {fileID: 0}
     - target: {fileID: 6796242577904766952, guid: ddb8da910f556784fabd42a878731269,
         type: 3}
@@ -16236,6 +16236,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: podest
       objectReference: {fileID: 0}
+    - target: {fileID: 6796242577904766953, guid: ddb8da910f556784fabd42a878731269,
+        type: 3}
+      propertyPath: m_Name
+      value: ClientReRoll
+      objectReference: {fileID: 0}
     - target: {fileID: 6796242578533118164, guid: ddb8da910f556784fabd42a878731269,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16290,11 +16295,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6796242577904766953, guid: ddb8da910f556784fabd42a878731269,
-        type: 3}
-      propertyPath: m_Name
-      value: ClientReRoll
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6796242577417930949, guid: ddb8da910f556784fabd42a878731269, type: 3}
