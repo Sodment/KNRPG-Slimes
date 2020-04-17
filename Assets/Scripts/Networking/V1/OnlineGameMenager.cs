@@ -13,7 +13,6 @@ public class OnlineGameMenager : MonoBehaviour
 
 
     private int[] PlayerHP = new int[2];
-    //private int[] PlayerGold = new int[2];
     private void Start()
     {
         PlayerHP[0] = 8;
@@ -95,4 +94,5 @@ public class OnlineGameMenager : MonoBehaviour
             view.RPC("SubmitWar", RpcTarget.All, WinnerID);
         }
     }
+
 }

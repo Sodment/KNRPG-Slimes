@@ -56,7 +56,6 @@ public class MotherSlime : MonoBehaviour
 
     public void GetDMG()
     {
-        Debug.Log("GetDMG");
         Destroy(transform.GetChild(0).gameObject);
         List<Transform> Crystals = new List<Transform>();
         Crystals.AddRange( transform.GetComponentsInChildren<Transform>());

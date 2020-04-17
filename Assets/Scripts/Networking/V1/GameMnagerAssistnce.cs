@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class GameMnagerAssistnce : MonoBehaviour
+public class GameMnagerAssistnce : MonoBehaviourPunCallbacks
 {
     public Text text;
 
@@ -15,6 +15,11 @@ public class GameMnagerAssistnce : MonoBehaviour
     [SerializeField]
     private Text WinnerIbfoText;
 
+    private GameObject EnemyKingSlime;
+
+    public Vector3 EnemyMotherSlimePos;
+
+
     [PunRPC]
     void ChangeTime(int newTime)
     {
@@ -24,7 +29,7 @@ public class GameMnagerAssistnce : MonoBehaviour
 
     public void StartBattle()
     {
-        foreach(SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+        foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
         {
             k.ChangeState(SlimeBehaviour.State.Fight);
             Slimes.Add(k.gameObject);
@@ -35,8 +40,12 @@ public class GameMnagerAssistnce : MonoBehaviour
     void SubmitBattle(int WinnerID)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber != WinnerID)
-        { 
+        {
             GameObject.FindObjectOfType<MotherSlime>().GetDMG();
+        }
+        else
+        {
+            EnemyKingSlime.GetComponent<MotherSlimeHP>().GetDMG();
         }
     }
 
@@ -68,5 +77,21 @@ public class GameMnagerAssistnce : MonoBehaviour
             k.GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Prepare);
         }
         Slimes.Clear();
+    }
+
+    [PunRPC]
+    void SetEnemyData(float r, float g, float b, string name)
+    {
+        GameObject GO = (GameObject)Instantiate( Resources.Load("Customize/" + name, typeof(GameObject)) as GameObject, EnemyMotherSlimePos, Quaternion.identity);
+        GO.GetComponent<Renderer>().material.color = new Color(r, g, b, 0.5f);
+        GO.AddComponent<MotherSlimeHP>();
+        GameObject HPwsk = (GameObject)Instantiate(Resources.Load("Tools/CrystalHPwsk", typeof(GameObject)) as GameObject);
+        for (int i = HPwsk.transform.childCount - 1; i >= 0; i--)
+        {
+            HPwsk.transform.GetChild(i).parent = GO.transform;
+        }
+        GO.GetComponent<MotherSlimeHP>().GetDMG();
+        EnemyKingSlime = GO;
+        Destroy(HPwsk);
     }
 }

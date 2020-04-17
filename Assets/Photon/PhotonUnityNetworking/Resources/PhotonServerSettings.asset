@@ -41,5 +41,6 @@ MonoBehaviour:
   - SubmitBattle
   - Prepare
   - SubmitWar
+  - SetEnemyData
   DisableAutoOpenWizard: 1
   ShowSettings: 1
