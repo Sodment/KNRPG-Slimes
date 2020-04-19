@@ -21,8 +21,6 @@ public class PVPGameMenager : MonoBehaviour
     public int TureDruation = 5;
 
     int[] WinsPlayer = new int[2];
-    public int goldplayer1 = 0;
-    public int goldplayer2 = 0;
     bool Match = true;
 
 
@@ -34,8 +32,6 @@ public class PVPGameMenager : MonoBehaviour
         InfoCanvas.SetActive(false);
         WinsPlayer[0] = 0;
         WinsPlayer[1] = 0;
-        goldplayer1 = 4;
-        goldplayer2 = 4;
         StartCoroutine(GameProcedure());
     }
 
@@ -105,8 +101,8 @@ public class PVPGameMenager : MonoBehaviour
                 
                 if ((Player1UnitsCount == 0 || Player2UnitsCount == 0)&&i>3)
                 {
-                    if (Player1UnitsCount == 0) { WinsPlayer[1]++; goldplayer2 += 5; }
-                    else { WinsPlayer[0]++; goldplayer1 += 5; }
+                    if (Player1UnitsCount == 0) { WinsPlayer[1]++; }
+                    else { WinsPlayer[0]++; }
                     if(WinsPlayer[0]>=5 || WinsPlayer[1] >= 5)
                     {
                         Match = false;

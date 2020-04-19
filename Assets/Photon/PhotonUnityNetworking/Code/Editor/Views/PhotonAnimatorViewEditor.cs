@@ -289,9 +289,7 @@ namespace Photon.Pun
             if (isUsingTriggers)
             {
                 GUILayout.BeginHorizontal(GUI.skin.box);
-                GUILayout.Label("When using triggers, make sure this component is last in the stack.\n" +
-                                "If you still experience issues, implement triggers as a regular RPC \n" +
-                                "or in custom IPunObservable component instead");
+                GUILayout.Label("When using triggers, make sure this component is last in the stack");
                 GUILayout.EndHorizontal();
             }
         }

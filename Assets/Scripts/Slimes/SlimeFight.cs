@@ -10,7 +10,7 @@ public class SlimeFight : MonoBehaviour
     float reload;
 
     [SerializeField]
-    //private Canvas healthCanvas = null;
+    private Canvas healthCanvas = null;
     public Image HealthBar;
 
     GameObject Enemy;

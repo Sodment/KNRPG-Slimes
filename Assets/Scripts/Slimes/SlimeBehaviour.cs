@@ -15,6 +15,8 @@ public class SlimeBehaviour : MonoBehaviour
     [SerializeField]
     private Canvas healthCanva = null;
 
+    public string UnitID;
+
     private void Awake()
     {
         PrepareScript = GetComponent<SmothPass>();

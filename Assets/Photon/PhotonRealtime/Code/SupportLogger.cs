@@ -24,8 +24,6 @@ namespace Photon.Realtime
 
     using Stopwatch = System.Diagnostics.Stopwatch;
 
-    using ExitGames.Client.Photon;
-
     #if SUPPORTED_UNITY
     using UnityEngine;
     #endif
@@ -44,7 +42,7 @@ namespace Photon.Realtime
     #if SUPPORTED_UNITY
     [DisallowMultipleComponent]
 	[AddComponentMenu("")] // hide from Unity Menus and searches
-	public class SupportLogger : MonoBehaviour, IConnectionCallbacks , IMatchmakingCallbacks , IInRoomCallbacks, ILobbyCallbacks, IErrorInfoCallback
+	public class SupportLogger : MonoBehaviour, IConnectionCallbacks , IMatchmakingCallbacks , IInRoomCallbacks, ILobbyCallbacks
     #else
 	public class SupportLogger : IConnectionCallbacks, IInRoomCallbacks, IMatchmakingCallbacks , ILobbyCallbacks
     #endif
@@ -339,7 +337,7 @@ namespace Photon.Realtime
         }
 
 
-        #if !SUPPORTED_UNITY
+#if !SUPPORTED_UNITY
         private static class Debug
         {
             public static void Log(string msg)
@@ -355,11 +353,6 @@ namespace Photon.Realtime
                 System.Diagnostics.Debug.WriteLine(msg);
             }
         }
-        #endif
-
-        public void OnErrorInfo(ErrorInfo errorInfo)
-        {
-            Debug.LogError(errorInfo.ToString());
-        }
+#endif
     }
 }
