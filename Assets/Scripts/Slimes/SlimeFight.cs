@@ -5,22 +5,17 @@ using UnityEngine.UI;
 
 public class SlimeFight : MonoBehaviour
 {
-    private float currenthp;
     float Reload;
     float reload;
 
-    [SerializeField]
-    private Canvas healthCanvas = null;
-    public Image HealthBar;
-
-    GameObject Enemy;
+    protected GameObject Enemy;
 
     List<GameObject> PotentialEnemies = new List<GameObject>();
+
 
     private void Start()
     {
         Reload = 1.0f / GetComponent<SlimeLevelsV2>().AttackSpeed;
-        currenthp = GetComponent<SlimeLevelsV2>().Health;
     }
 
     private void OnDisable()
@@ -31,8 +26,7 @@ public class SlimeFight : MonoBehaviour
 
     private void Update()
     {
-        HealthBar.fillAmount = currenthp / GetComponent<SlimeLevelsV2>().Health;
-        if (reload > 0.0f)
+        if (reload > 0.0f && GetComponent<Stun>()==null)
         {
             reload -= Time.deltaTime;
         }
@@ -53,19 +47,17 @@ public class SlimeFight : MonoBehaviour
 
         if (Enemy != null && reload<=0.0f)
         {
-            Enemy.GetComponent<SlimeFight>().currenthp -= GetComponent<SlimeLevelsV2>().Attack;
-            Debug.Log(name + " " + Enemy.name);
+            Attack();
             reload = Reload;
         }
-        if (currenthp <= 0)
-        {
-            GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Die);
-        }
-
     }
     public void Respawn()
     {
-        currenthp = GetComponent<SlimeLevelsV2>().Health;
+        Effect[] tmp = GetComponents<Effect>();
+        foreach(Effect k in tmp)
+        {
+            Destroy(k);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -96,5 +88,10 @@ public class SlimeFight : MonoBehaviour
             }
             else { Enemy = null; }
         }
+    }
+
+    void Attack()
+    {
+        GetComponent<AttackCallback>().Attack(Enemy); 
     }
 }

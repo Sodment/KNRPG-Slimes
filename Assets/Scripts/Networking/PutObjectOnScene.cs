@@ -6,9 +6,9 @@ using Photon.Pun;
 public class PutObjectOnScene : MonoBehaviour
 {
     [SerializeField]
-    private GameObject SlimePrefab;
+    private GameObject SlimePrefab= null;
     [SerializeField]
-    private GameObject[] CrystalsData;
+    private GameObject[] CrystalsData=null;
 
     [PunRPC]
     void PutSlime(float x, float y, float z, int PlayerID, string UnitID, int[] Crystals)

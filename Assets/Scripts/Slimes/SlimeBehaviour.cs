@@ -11,9 +11,12 @@ public class SlimeBehaviour : MonoBehaviour
     SmothPass PrepareScript;
     AbominacjaRobiacaZaPathFind MoveScript;
     SlimeFight FightScript;
+    SlimeHealth HealthScript;
     Rigidbody RB;
-    [SerializeField]
-    private Canvas healthCanva = null;
+
+    public GameObject healthCanvas;
+    public Image healthBar;
+
 
     public string UnitID;
 
@@ -22,9 +25,10 @@ public class SlimeBehaviour : MonoBehaviour
         PrepareScript = GetComponent<SmothPass>();
         MoveScript = GetComponent<AbominacjaRobiacaZaPathFind>();
         FightScript = GetComponent<SlimeFight>();
+        HealthScript = GetComponent<SlimeHealth>();
         RB = GetComponent<Rigidbody>();
         ChangeState(CurrentState);
-        healthCanva.enabled = false;
+        healthCanvas.SetActive(false);
     }
 
     public void ChangeState(State NewState)
@@ -34,6 +38,10 @@ public class SlimeBehaviour : MonoBehaviour
         {
             case State.Prepare: 
                 {
+                    HealthScript = GetComponent<SlimeHealth>();
+                    HealthScript.Start();
+                    HealthScript.Prepare(GetComponent<SlimeLevelsV2>().Health);
+                    healthCanvas.SetActive(false);
                     PrepareScript.enabled = true;
                     if (transform.parent != null)
                     { transform.position = transform.parent.position; }
@@ -41,16 +49,17 @@ public class SlimeBehaviour : MonoBehaviour
                     FightScript.Respawn();
                     FightScript.enabled = false;
                     RB.isKinematic = true;
-                    healthCanva.enabled = false;
                     break; 
                 }
             case State.Fight:
                 {
+                    HealthScript = GetComponent<SlimeHealth>();
+                    HealthScript.Prepare(GetComponent<SlimeLevelsV2>().Health);
                     PrepareScript.enabled = false;
                     MoveScript.enabled = true;
                     FightScript.enabled = true;
                     RB.isKinematic = false;
-                    healthCanva.enabled = true;
+                    HealthScript = GetComponent<SlimeHealth>();
                     break;
                 }
             case State.Die:
@@ -63,6 +72,12 @@ public class SlimeBehaviour : MonoBehaviour
                     break;
                 }
         }
+    }
+
+
+    public void GetDMG(float _dmg)
+    {
+        HealthScript.GetDMG(_dmg);
     }
 
 }

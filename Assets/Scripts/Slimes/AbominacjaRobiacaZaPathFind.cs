@@ -11,6 +11,9 @@ public class AbominacjaRobiacaZaPathFind : MonoBehaviour
     [HideInInspector]
     public Vector3 Target;
 
+    public float velocity = 1.0f;
+    public float defaultVelocity = 1.0f;
+
     private void Start()
     {
         PlayerID = GetComponent<SlimeBehaviour>().PlayerID;
@@ -39,6 +42,6 @@ public class AbominacjaRobiacaZaPathFind : MonoBehaviour
             return;
         }
         Vector3 root = Vector3.Cross((Target - transform.position*2.0f), ToCross);
-        RB.AddTorque(root*(0.5f+Mathf.Pow(MinimumDistance,1.7f)), ForceMode.Force);
+        RB.AddTorque(root*(0.5f+Mathf.Pow(MinimumDistance,1.7f))*velocity, ForceMode.Force);
     }
 }

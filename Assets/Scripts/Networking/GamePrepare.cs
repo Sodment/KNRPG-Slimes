@@ -7,14 +7,14 @@ using Photon.Realtime;
 public class GamePrepare : MonoBehaviour
 {
     [SerializeField]
-    private MotherSlime MasterMotherSlime;
+    private MotherSlime MasterMotherSlime = null;
     [SerializeField]
-    private Interact MasterReroll;
+    private Interact MasterReroll = null;
 
     [SerializeField]
-    private MotherSlime ClientMotherSlime;
+    private MotherSlime ClientMotherSlime = null;
     [SerializeField]
-    private Interact ClientReroll;
+    private Interact ClientReroll = null;
 
 
     private void Awake()

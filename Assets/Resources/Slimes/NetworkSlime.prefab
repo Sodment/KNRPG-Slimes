@@ -684,6 +684,8 @@ GameObject:
   - component: {fileID: 1231344757804309506}
   - component: {fileID: 8154758924263212794}
   - component: {fileID: 5604963147280619654}
+  - component: {fileID: -8497987445636613847}
+  - component: {fileID: 5250771822059906366}
   m_Layer: 0
   m_Name: NetworkSlime
   m_TagString: Slime
@@ -763,6 +765,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {x: 0, y: 0, z: 0}
+  velocity: 1
+  defaultVelocity: 1
 --- !u!114 &8615687227903488570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -803,6 +807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b47165200e2e88439ed3975a92eaa63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currenthp: 0
   healthCanvas: {fileID: 4314409382883954444}
   HealthBar: {fileID: 3132249506586335925}
 --- !u!114 &5604963147280619654
@@ -815,5 +820,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 412991b0d3f0aff49a7d1339779f2c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8497987445636613847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471838458706055696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e94b84b7cc0544dac8f6f44c839774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5250771822059906366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471838458706055696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f94cef6ce99114c8dc48109dd668b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

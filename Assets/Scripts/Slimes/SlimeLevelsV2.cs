@@ -46,6 +46,8 @@ public class SlimeLevelsV2 : MonoBehaviour
         ColorVec.Normalize();
         ColorVec /= Mathf.Max(ColorVec.x, ColorVec.y, ColorVec.z);
         transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(ColorVec.x, ColorVec.y, ColorVec.z,0.5f);
+
+        GetQuirck();
     }
 
     public int[] Crystals()
@@ -60,5 +62,78 @@ public class SlimeLevelsV2 : MonoBehaviour
             }
         }
         return CrystalList.ToArray();
+    }
+
+    void GetQuirck()
+    {
+        if (Colors.Count == 3)
+        {
+            if (Typ[0] == 3)
+            {
+                gameObject.AddComponent<EarthAttack>();
+            }
+            else if (Typ[1] == 3)
+            {
+                gameObject.AddComponent<FireAttack>();
+            }
+            else if (Typ[2] == 3)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[3] == 3)
+            {
+                gameObject.AddComponent<Shild>();
+            }
+            else
+            {
+                //gameObject.AddComponent<>();
+            }
+        }
+        else if (Colors.Count == 6)
+        {
+            if (Typ[0] == 6)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[1] == 6)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[2] == 6)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[3] == 6)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else
+            {
+                //gameObject.AddComponent<>();
+            }
+        }
+        if (Colors.Count == 9)
+        {
+            if (Typ[0] == 9)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[1] == 9)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[2] == 9)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else if (Typ[3] == 9)
+            {
+                //gameObject.AddComponent<>();
+            }
+            else
+            {
+                //gameObject.AddComponent<>();
+            }
+        }
     }
 }

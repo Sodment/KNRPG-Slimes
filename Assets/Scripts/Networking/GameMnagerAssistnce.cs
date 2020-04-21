@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class GameMnagerAssistnce : MonoBehaviourPunCallbacks
 {
@@ -11,9 +12,9 @@ public class GameMnagerAssistnce : MonoBehaviourPunCallbacks
     private List<GameObject> Slimes = new List<GameObject>();
 
     [SerializeField]
-    private GameObject WinnerInfoCanvas;
+    private GameObject WinnerInfoCanvas=null;
     [SerializeField]
-    private Text WinnerIbfoText;
+    private Text WinnerIbfoText=null;
 
     private GameObject EnemyKingSlime;
 
@@ -93,5 +94,18 @@ public class GameMnagerAssistnce : MonoBehaviourPunCallbacks
         GO.GetComponent<MotherSlimeHP>().GetDMG();
         EnemyKingSlime = GO;
         Destroy(HPwsk);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        WinnerIbfoText.text = "Your opponent surrender \n You win";
+        if (GameObject.FindObjectOfType<OnlineGameMenager>() != null)
+        { Destroy(GameObject.FindObjectOfType<OnlineGameMenager>().GetComponent<OnlineGameMenager>()); }
+        WinnerInfoCanvas.SetActive(true);
+    }
+
+    public void LeftRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 }

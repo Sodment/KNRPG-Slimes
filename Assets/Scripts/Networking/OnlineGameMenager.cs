@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class OnlineGameMenager : MonoBehaviour
 {
     [SerializeField]
-    private Text Timer;
+    private Text Timer=null;
     [SerializeField]
     private int PrepareDruation = 4;
     PhotonView view;

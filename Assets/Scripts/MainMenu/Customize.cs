@@ -7,15 +7,15 @@ using System.Linq;
 public class Customize : MonoBehaviour
 {
     [SerializeField]
-    private Slider R;
+    private Slider R=null;
     [SerializeField]
-    private Slider G;
+    private Slider G=null;
     [SerializeField]
-    private Slider B;
+    private Slider B=null;
     [SerializeField]
-    private GameObject Model;
+    private GameObject Model=null;
     [SerializeField]
-    private Material Mat;
+    private Material Mat=null;
 
     List<GameObject> Models = new List<GameObject>();
     int CurrentMesh = 1;

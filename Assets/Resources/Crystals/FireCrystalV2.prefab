@@ -107,9 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  AttackBonus: 2
-  AttackSpeedBonus: 1
-  HealthBonus: -2
+  AttackBonus: 0
+  AttackSpeedBonus: 0
+  HealthBonus: 0
   MovmentSpeedBonus: 0
 --- !u!114 &7496607864015968824
 MonoBehaviour:
