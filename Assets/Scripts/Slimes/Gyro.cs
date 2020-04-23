@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Gyro : MonoBehaviour
 {
-    AbominacjaRobiacaZaPathFind TargetData;
+    //AbominacjaRobiacaZaPathFind TargetData;
     Vector3 Up = Vector3.up;
 
-    private void Awake()
+    /*private void Awake()
     {
         TargetData = transform.parent.gameObject.GetComponent<AbominacjaRobiacaZaPathFind>();
-    }
+    }*/
     void Update()
     {
-        if (TargetData.Target != transform.position)
-        { transform.rotation = Quaternion.LookRotation(TargetData.Target - transform.position, Up); }
+       // if (TargetData.Target != transform.position)
+        { transform.rotation = Quaternion.LookRotation(/*TargetData.Target*/ - transform.position, Up); }
     }
 }

@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 2
-  SlimePrefab: {fileID: 8737038886548944193, guid: e69cf8efe86129548830889b4175c298,
+  SlimePrefab: {fileID: 5318391285339011073, guid: e38034a9649db944f8305a1489dd2fc6,
     type: 3}
   Crystals:
   - {fileID: 7646219245236969715, guid: b7276c7163c7d21488368b08b77503d8, type: 3}
@@ -10288,7 +10288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 1
-  SlimePrefab: {fileID: 8737038886548944193, guid: e69cf8efe86129548830889b4175c298,
+  SlimePrefab: {fileID: 5318391285339011073, guid: e38034a9649db944f8305a1489dd2fc6,
     type: 3}
   Crystals:
   - {fileID: 7646219245236969715, guid: b7276c7163c7d21488368b08b77503d8, type: 3}
@@ -12697,7 +12697,7 @@ MonoBehaviour:
   Info: {fileID: 357544313}
   EQPlayer1: {fileID: 1018766601}
   EQPlayer2: {fileID: 42366762}
-  TureDruation: 20
+  TureDruation: 10
   PauseCanvas: {fileID: 1873370358}
 --- !u!1 &1352123936
 GameObject:

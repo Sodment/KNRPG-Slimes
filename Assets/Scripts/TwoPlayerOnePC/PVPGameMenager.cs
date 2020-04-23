@@ -82,9 +82,9 @@ public class PVPGameMenager : MonoBehaviour
             CurrentStage = Stage.Battle;
             List<GameObject> FightingSlimes = new List<GameObject>();
 
-            foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+            foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
             {
-                k.ChangeState(SlimeBehaviour.State.Fight);
+                k.ChangeState(SlimeBahaviourV2.State.Fight);
                 FightingSlimes.Add(k.gameObject);
             }
             
@@ -93,7 +93,7 @@ public class PVPGameMenager : MonoBehaviour
                 int Player1UnitsCount = 0;
                 int Player2UnitsCount = 0;
 
-                foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
                 {
                     if (k.PlayerID == 1) { Player1UnitsCount++; }
                     if (k.PlayerID == 2) { Player2UnitsCount++; }
@@ -107,6 +107,10 @@ public class PVPGameMenager : MonoBehaviour
                     {
                         Match = false;
                     }
+                    foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
+                    {
+                        k.ChangeState(SlimeBahaviourV2.State.Prepare);
+                    }
                     i = 3; 
                 }
                 Timer.text = i.ToString();
@@ -116,7 +120,7 @@ public class PVPGameMenager : MonoBehaviour
             foreach (GameObject k in FightingSlimes)
             {
                 k.SetActive(true);
-                k.GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Prepare);
+                k.GetComponent<SlimeBahaviourV2>().ChangeState(SlimeBahaviourV2.State.Prepare);
             }
            
 
@@ -172,9 +176,9 @@ public class PVPGameMenager : MonoBehaviour
             CurrentStage = Stage.Battle;
             FightingSlimes.Clear();
 
-            foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+            foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
             {
-                k.ChangeState(SlimeBehaviour.State.Fight);
+                k.ChangeState(SlimeBahaviourV2.State.Fight);
                 FightingSlimes.Add(k.gameObject);
             }
 
@@ -183,7 +187,7 @@ public class PVPGameMenager : MonoBehaviour
                 int Player1UnitsCount = 0;
                 int Player2UnitsCount = 0;
 
-                foreach (SlimeBehaviour k in GameObject.FindObjectsOfType<SlimeBehaviour>())
+                foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
                 {
                     if (k.PlayerID == 1) { Player1UnitsCount++; }
                     if (k.PlayerID == 2) { Player2UnitsCount++; }
@@ -197,6 +201,10 @@ public class PVPGameMenager : MonoBehaviour
                     {
                         Match = false;
                     }
+                    foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
+                    {
+                        k.ChangeState(SlimeBahaviourV2.State.Prepare);
+                    }
                     i = 3;
                 }
                 Timer.text = i.ToString();
@@ -206,7 +214,7 @@ public class PVPGameMenager : MonoBehaviour
             foreach (GameObject k in FightingSlimes)
             {
                 k.SetActive(true);
-                k.GetComponent<SlimeBehaviour>().ChangeState(SlimeBehaviour.State.Prepare);
+                k.GetComponent<SlimeBahaviourV2>().ChangeState(SlimeBahaviourV2.State.Prepare);
             }
 
             

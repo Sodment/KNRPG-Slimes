@@ -24,8 +24,9 @@ public class IventoryV5 : MonoBehaviour
             if (k.name == "UnitSlot")
             {
                 GO = (GameObject)Instantiate(SlimePrefab, k.position, k.rotation);
-                GO.GetComponent<SlimeBehaviour>().PlayerID = PlayerID;
-                GO.GetComponent<SlimeBehaviour>().UnitID = PlayerName + i.ToString();
+                // GO.GetComponent<SlimeBehaviour>().PlayerID = PlayerID;
+                // GO.GetComponent<SlimeBehaviour>().UnitID = PlayerName + i.ToString();
+                GO.GetComponent<SlimeBahaviourV2>().PlayerID = PlayerID;
                 i++;
             }
             else { GO = (GameObject)Instantiate(Crystals[Random.Range(0,Crystals.Length)], k.position, k.rotation); }

@@ -70,11 +70,11 @@ public class SlimeLevelsV2 : MonoBehaviour
         {
             if (Typ[0] == 3)
             {
-                gameObject.AddComponent<EarthAttack>();
+                //gameObject.AddComponent<>();
             }
             else if (Typ[1] == 3)
             {
-                gameObject.AddComponent<FireAttack>();
+                gameObject.AddComponent<FireAttackV2>();
             }
             else if (Typ[2] == 3)
             {
@@ -82,7 +82,7 @@ public class SlimeLevelsV2 : MonoBehaviour
             }
             else if (Typ[3] == 3)
             {
-                gameObject.AddComponent<Shild>();
+                //gameObject.AddComponent<>();
             }
             else
             {
