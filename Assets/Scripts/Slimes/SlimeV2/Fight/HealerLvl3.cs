@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireAttackV2 : FightCallback 
+public class HealerLvl3 : FightCallback
 {
     GameObject target;
     List<GameObject> enemyList = new List<GameObject>();
@@ -17,7 +17,7 @@ public class FireAttackV2 : FightCallback
     {
         if (collision.gameObject.GetComponent<SlimeBahaviourV2>() != null)
         {
-            if (collision.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
+            if (collision.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID == playerID)
             {
                 enemyList.Add(collision.gameObject);
             }
@@ -46,12 +46,8 @@ public class FireAttackV2 : FightCallback
         if (target != null)
         {
             base.Attack();
-            target.GetComponent<HealthCallback>().GetDMG(modedDMG);
-            if (target.GetComponent<FireImmunity>()==null || target.GetComponent<FireImmunityLvl3>()==null) 
-            {
-                target.AddComponent<IgniteV2>();
-                target.GetComponent<IgniteV2>().Prepare(1.0f);
-            }
+            target.GetComponent<HealthCallback>().GetDMG(-modedDMG-5); //Albo dmg
+            GetComponent<HealthCallback>().GetDMG(modedDMG * 0.75f);
         }
     }
 

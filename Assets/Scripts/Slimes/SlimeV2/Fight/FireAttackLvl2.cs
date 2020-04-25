@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireAttackV2 : FightCallback 
+public class FireAttackLvl2 : FightCallback
 {
     GameObject target;
     List<GameObject> enemyList = new List<GameObject>();
@@ -11,6 +11,8 @@ public class FireAttackV2 : FightCallback
     private void Awake()
     {
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+        baseDMG += 2;
+        modedDMG += 2;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,12 +48,24 @@ public class FireAttackV2 : FightCallback
         if (target != null)
         {
             base.Attack();
-            target.GetComponent<HealthCallback>().GetDMG(modedDMG);
-            if (target.GetComponent<FireImmunity>()==null || target.GetComponent<FireImmunityLvl3>()==null) 
+            foreach(Collider k in Physics.OverlapSphere(target.transform.position, 1.5f))
             {
-                target.AddComponent<IgniteV2>();
-                target.GetComponent<IgniteV2>().Prepare(1.0f);
+                if (k.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID==playerID) continue;
+                else
+                {
+                    if (k.gameObject.GetComponent<FireImmunity>() || k.gameObject.GetComponent<FireImmunityLvl3>())
+                    {
+                        k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
+                    }
+                    else
+                    {
+                        k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
+                        target.AddComponent<IgniteV2>();
+                        target.GetComponent<IgniteV2>().Prepare(1.0f);
+                    }
+                }
             }
+
         }
     }
 

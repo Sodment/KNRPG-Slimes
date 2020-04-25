@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireAttackV2 : FightCallback 
+public class SliWondoAttackLvl3 : FightCallback
 {
     GameObject target;
     List<GameObject> enemyList = new List<GameObject>();
     private int playerID;
+
+    private int delay = 0;
 
     private void Awake()
     {
@@ -47,10 +49,17 @@ public class FireAttackV2 : FightCallback
         {
             base.Attack();
             target.GetComponent<HealthCallback>().GetDMG(modedDMG);
-            if (target.GetComponent<FireImmunity>()==null || target.GetComponent<FireImmunityLvl3>()==null) 
+            delay--;
+            if (delay == 0)
             {
-                target.AddComponent<IgniteV2>();
-                target.GetComponent<IgniteV2>().Prepare(1.0f);
+                foreach (Collider k in Physics.OverlapBox(transform.position + (target.transform.position - transform.position).normalized, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(target.transform.position - transform.position)))
+                {
+                    if (k.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
+                    {
+                        k.GetComponent<Rigidbody>().AddForce((target.transform.position - transform.position).normalized * 4.0f, ForceMode.Impulse);
+                    }
+                }
+                delay = 5;
             }
         }
     }

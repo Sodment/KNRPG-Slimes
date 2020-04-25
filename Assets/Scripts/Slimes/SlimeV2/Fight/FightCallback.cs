@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FightCallback : MonoBehaviour
 {
-    private float baseDMG;
+    protected float baseDMG;
 
     protected float modedDMG;
 

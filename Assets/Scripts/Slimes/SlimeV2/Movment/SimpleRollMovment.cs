@@ -31,6 +31,10 @@ public class SimpleRollMovment : MovmentCallback
             if (Slime.gameObject!=null)
             {
                 float dist = Vector3.Distance(transform.position, Slime.transform.position);
+                if (Slime.gameObject.GetComponent<ShildLvl2>())
+                {
+                    dist = 0;
+                }
                 if (dist < MinimumDistance)
                 {
                     Target = Slime.transform.position;

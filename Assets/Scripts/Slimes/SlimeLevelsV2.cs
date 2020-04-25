@@ -70,7 +70,7 @@ public class SlimeLevelsV2 : MonoBehaviour
         {
             if (Typ[0] == 3)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<Shild>();
             }
             else if (Typ[1] == 3)
             {
@@ -78,61 +78,73 @@ public class SlimeLevelsV2 : MonoBehaviour
             }
             else if (Typ[2] == 3)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<FireImmunity>();
             }
             else if (Typ[3] == 3)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<Atletyka>();
             }
             else
             {
-                //gameObject.AddComponent<>();
+                int rand = Random.Range(0, 4);
+                switch (rand)
+                {
+                    case 0: { gameObject.AddComponent<Shild>(); break; }
+                    case 1: { gameObject.AddComponent<FireAttackV2>(); break; }
+                    case 2: { gameObject.AddComponent<FireImmunity>(); break; }
+                    case 3: { gameObject.AddComponent<Atletyka>(); break; }
+                }
             }
         }
         else if (Colors.Count == 6)
         {
             if (Typ[0] == 6)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<ShildLvl2>();
             }
             else if (Typ[1] == 6)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<FireAttackLvl2>();
             }
             else if (Typ[2] == 6)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<Healer>();
             }
             else if (Typ[3] == 6)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<SliWondoAttack1>();
+                gameObject.AddComponent<SliWondoDefense1>();
             }
             else
             {
-                //gameObject.AddComponent<>();
+                Debug.Log("Quirck \"Deszcze niespokojnie\" jeszcze nieopracwany");
+                //gameObject.AddComponent<>(); //TO DO
             }
         }
         if (Colors.Count == 9)
         {
             if (Typ[0] == 9)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<ShildLvl3>();
             }
             else if (Typ[1] == 9)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<FireAttackLvl3>();
             }
             else if (Typ[2] == 9)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<HealerLvl3>();
+                gameObject.AddComponent<FireImmunityLvl3>();
             }
             else if (Typ[3] == 9)
             {
-                //gameObject.AddComponent<>();
+                gameObject.AddComponent<SliWondoAttackLvl3>();
+                gameObject.AddComponent<SliWondoDefenseLvl3>();
             }
             else
             {
-                //gameObject.AddComponent<>();
+                Debug.Log("Quirck \"Al-Slimone\" jeszcze nieopracwany");
+                //gameObject.AddComponent<>(); //TO DO
             }
         }
     }
