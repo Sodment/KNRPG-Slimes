@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SlimeBahaviourV2 : MonoBehaviour
 {
     public int PlayerID;
-    public enum State { Prepare, Fight, Die};
+    public enum State { Prepare, Fight, Die, Stun};
 
     [SerializeField]
     private State currentState = State.Prepare;
@@ -52,9 +52,22 @@ public class SlimeBahaviourV2 : MonoBehaviour
                 }
             case State.Fight:
                 {
+                    healthScript = GetComponent<HealthCallback>();
+                    fightScript = GetComponent<FightCallback>();
+                    prepareScript = GetComponent<PrepareCallback>();
+                    movmentsScript = GetComponent<MovmentCallback>();
                     prepareScript.enabled = false;
                     fightScript.enabled = true;
                     movmentsScript.enabled = true;
+                    healthScript.enabled = true;
+                    rigidbody.isKinematic = false;
+                    break;
+                }
+            case State.Stun:
+                {
+                    prepareScript.enabled = false;
+                    fightScript.enabled = false;
+                    movmentsScript.enabled = false;
                     healthScript.enabled = true;
                     rigidbody.isKinematic = false;
                     break;
@@ -89,5 +102,10 @@ public class SlimeBahaviourV2 : MonoBehaviour
         {
             Destroy(effects[i]);
         }
+    }
+
+    public State GetState()
+    {
+        return currentState;
     }
 }

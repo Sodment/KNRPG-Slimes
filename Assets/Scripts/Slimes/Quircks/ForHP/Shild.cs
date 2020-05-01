@@ -2,23 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shild : SlimeHealth
+public class Shild : HealthCallback
 {
-    float shildHP;
+    float currenthp = 20;
 
-    public override void Prepare(float _maxHP)
+    private void OnEnable()
     {
-        base.Prepare(_maxHP);
-        shildHP = 10.0f;
+        currenthp = 20;
     }
-
     public override void GetDMG(float _dmg)
     {
-        shildHP -= _dmg;
-        if (shildHP < 0.0f)
-        { 
-            base.GetDMG(-shildHP);
-            shildHP = 0;
+        currenthp -= _dmg;
+        if (currenthp <= 0)
+        {
+            base.GetDMG(-currenthp);
+            currenthp = 0;
         }
     }
 }

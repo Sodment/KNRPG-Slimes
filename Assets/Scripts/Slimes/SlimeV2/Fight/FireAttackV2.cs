@@ -13,6 +13,12 @@ public class FireAttackV2 : FightCallback
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
     }
 
+    private void OnEnable()
+    {
+        playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+        Prepare();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<SlimeBahaviourV2>() != null)
@@ -21,7 +27,10 @@ public class FireAttackV2 : FightCallback
             {
                 enemyList.Add(collision.gameObject);
             }
-            if (target == null) { target = enemyList[0]; }
+            if ((target == null || target.activeInHierarchy == false) && enemyList.Count > 0)
+            {
+                target = enemyList[0];
+            }
         }
     }
 
@@ -29,7 +38,7 @@ public class FireAttackV2 : FightCallback
     {
         if (enemyList.Contains(collision.gameObject))
         {
-            if (collision.gameObject == target)
+            if (collision.gameObject == target || target.activeInHierarchy == false)
             {
                 target = null;
             }
@@ -45,12 +54,31 @@ public class FireAttackV2 : FightCallback
     {
         if (target != null)
         {
-            base.Attack();
-            target.GetComponent<HealthCallback>().GetDMG(modedDMG);
-            if (target.GetComponent<FireImmunity>()==null || target.GetComponent<FireImmunityLvl3>()==null) 
+            if (!target.activeInHierarchy)
             {
-                target.AddComponent<IgniteV2>();
-                target.GetComponent<IgniteV2>().Prepare(1.0f);
+                target = null;
+                enemyList.Remove(target);
+                if (enemyList.Count > 0)
+                {
+                    target = enemyList[0];
+                    base.Attack();
+                    target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+                    if (target.GetComponent<FireImmunity>() == null || target.GetComponent<FireImmunityLvl3>() == null)
+                    {
+                        target.AddComponent<IgniteV2>();
+                        target.GetComponent<IgniteV2>().Prepare(1.0f);
+                    }
+                }
+            }
+            else
+            {
+                base.Attack();
+                target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+                if (target.GetComponent<FireImmunity>() == null || target.GetComponent<FireImmunityLvl3>() == null)
+                {
+                    target.AddComponent<IgniteV2>();
+                    target.GetComponent<IgniteV2>().Prepare(1.0f);
+                }
             }
         }
     }

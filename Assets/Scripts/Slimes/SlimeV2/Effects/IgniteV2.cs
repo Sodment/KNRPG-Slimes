@@ -14,6 +14,7 @@ public class IgniteV2 : Effects
         VisualEffect.transform.localPosition = Vector3.zero;
         VisualEffect.transform.localRotation = Quaternion.Euler(Vector3.zero);
         Destroy(VisualEffect, _druation);
+        Destroy(this, _druation);
         oneDMG = totalDMG * 0.1f;
 
         StartCoroutine(Burn(_druation));

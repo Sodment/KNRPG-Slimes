@@ -13,6 +13,12 @@ public class BasicAttack : FightCallback
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
     }
 
+    private void OnEnable()
+    {
+        playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+        Prepare();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<SlimeBahaviourV2>() != null)
@@ -21,7 +27,10 @@ public class BasicAttack : FightCallback
             {
                 enemyList.Add(collision.gameObject);
             }
-            if (target == null) { target = enemyList[0]; }
+            if ((target == null || target.activeInHierarchy==false)  && enemyList.Count>0)
+            { 
+                target = enemyList[0]; 
+            }
         }
     }
 
@@ -29,7 +38,7 @@ public class BasicAttack : FightCallback
     {
         if (enemyList.Contains(collision.gameObject))
         {
-            if (collision.gameObject == target)
+            if (collision.gameObject == target || target.activeInHierarchy == false)
             {
                 target = null;
             }
@@ -43,10 +52,24 @@ public class BasicAttack : FightCallback
 
     protected override void Attack()
     {
-        if (target != null)
+        if (target != null) 
         {
-            base.Attack();
-            target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+            if (!target.activeInHierarchy) 
+            {
+                target = null; 
+                enemyList.Remove(target);
+                if (enemyList.Count > 0) 
+                {
+                    target = enemyList[0];
+                    base.Attack();
+                    target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+                }
+            }
+            else
+            {
+                base.Attack();
+                target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+            }
         }
     }
 

@@ -11,6 +11,12 @@ public class FireAttackLvl3 : FightCallback
     private void Awake()
     {
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+    }
+
+    private void OnEnable()
+    {
+        playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+        Prepare();
         baseDMG += 2;
         modedDMG += 2;
     }
@@ -23,7 +29,10 @@ public class FireAttackLvl3 : FightCallback
             {
                 enemyList.Add(collision.gameObject);
             }
-            if (target == null) { target = enemyList[0]; }
+            if ((target == null || target.activeInHierarchy == false) && enemyList.Count > 0)
+            {
+                target = enemyList[0];
+            }
         }
     }
 
@@ -31,7 +40,7 @@ public class FireAttackLvl3 : FightCallback
     {
         if (enemyList.Contains(collision.gameObject))
         {
-            if (collision.gameObject == target)
+            if (collision.gameObject == target || target.activeInHierarchy == false)
             {
                 target = null;
             }
@@ -47,25 +56,54 @@ public class FireAttackLvl3 : FightCallback
     {
         if (target != null)
         {
-            base.Attack();
-            foreach (Collider k in Physics.OverlapSphere(target.transform.position, 1.5f))
+            if (!target.activeInHierarchy)
             {
-                if (k.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID == playerID) continue;
-                else
+                target = null;
+                enemyList.Remove(target);
+                if (enemyList.Count > 0)
                 {
-                    if (k.gameObject.GetComponent<FireImmunity>() || k.gameObject.GetComponent<FireImmunityLvl3>())
+                    target = enemyList[0];
+                    base.Attack();
+                    foreach (Collider k in Physics.OverlapSphere(target.transform.position, 1.5f))
                     {
-                        k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
-                    }
-                    else
-                    {
-                        k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
-                        target.AddComponent<IgniteV2>();
-                        target.GetComponent<IgniteV2>().Prepare(1.0f);
+                        if (k.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID == playerID) continue;
+                        else
+                        {
+                            if (k.gameObject.GetComponent<FireImmunity>() || k.gameObject.GetComponent<FireImmunityLvl3>())
+                            {
+                                k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
+                            }
+                            else
+                            {
+                                k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
+                                target.AddComponent<IgniteV2>();
+                                target.GetComponent<IgniteV2>().Prepare(2.0f);
+                            }
+                        }
                     }
                 }
             }
-
+            else
+            {
+                base.Attack();
+                foreach (Collider k in Physics.OverlapSphere(target.transform.position, 1.5f))
+                {
+                    if (k.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID == playerID) continue;
+                    else
+                    {
+                        if (k.gameObject.GetComponent<FireImmunity>() || k.gameObject.GetComponent<FireImmunityLvl3>())
+                        {
+                            k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
+                        }
+                        else
+                        {
+                            k.GetComponent<HealthCallback>().GetDMG(modedDMG * (Vector2.Distance(k.transform.position, target.transform.position) * 0.3f));
+                            target.AddComponent<IgniteV2>();
+                            target.GetComponent<IgniteV2>().Prepare(2.0f);
+                        }
+                    }
+                }
+            }
         }
     }
 

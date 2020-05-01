@@ -71,28 +71,32 @@ public class SlimeLevelsV2 : MonoBehaviour
             if (Typ[0] == 3)
             {
                 gameObject.AddComponent<Shild>();
+                gameObject.GetComponent<Shild>().enabled = false;
             }
             else if (Typ[1] == 3)
             {
                 gameObject.AddComponent<FireAttackV2>();
+                gameObject.GetComponent<FireAttackV2>().enabled = false;
             }
             else if (Typ[2] == 3)
             {
                 gameObject.AddComponent<FireImmunity>();
+                gameObject.GetComponent<FireImmunity>().enabled = false;
             }
             else if (Typ[3] == 3)
             {
                 gameObject.AddComponent<Atletyka>();
+                gameObject.GetComponent<Atletyka>().enabled = false;
             }
             else
             {
                 int rand = Random.Range(0, 4);
                 switch (rand)
                 {
-                    case 0: { gameObject.AddComponent<Shild>(); break; }
-                    case 1: { gameObject.AddComponent<FireAttackV2>(); break; }
-                    case 2: { gameObject.AddComponent<FireImmunity>(); break; }
-                    case 3: { gameObject.AddComponent<Atletyka>(); break; }
+                    case 0: { gameObject.AddComponent<Shild>();         gameObject.GetComponent<Shild>().enabled = false; break; }
+                    case 1: { gameObject.AddComponent<FireAttackV2>();  gameObject.GetComponent<FireAttackV2>().enabled = false; break; }
+                    case 2: { gameObject.AddComponent<FireImmunity>();  gameObject.GetComponent<FireImmunity>().enabled = false; break; }
+                    case 3: { gameObject.AddComponent<Atletyka>();      gameObject.GetComponent<Atletyka>().enabled = false; break; }
                 }
             }
         }
@@ -101,19 +105,24 @@ public class SlimeLevelsV2 : MonoBehaviour
             if (Typ[0] == 6)
             {
                 gameObject.AddComponent<ShildLvl2>();
+                gameObject.GetComponent<ShildLvl2>().enabled = false;
             }
             else if (Typ[1] == 6)
             {
                 gameObject.AddComponent<FireAttackLvl2>();
+                gameObject.GetComponent<FireAttackLvl2>().enabled = false;
             }
             else if (Typ[2] == 6)
             {
                 gameObject.AddComponent<Healer>();
+                gameObject.GetComponent<Healer>().enabled = false;
             }
             else if (Typ[3] == 6)
             {
                 gameObject.AddComponent<SliWondoAttack1>();
+                gameObject.GetComponent<SliWondoAttack1>().enabled = false;
                 gameObject.AddComponent<SliWondoDefense1>();
+                gameObject.GetComponent<SliWondoDefense1>().enabled = false;
             }
             else
             {
@@ -126,20 +135,26 @@ public class SlimeLevelsV2 : MonoBehaviour
             if (Typ[0] == 9)
             {
                 gameObject.AddComponent<ShildLvl3>();
+                gameObject.GetComponent<ShildLvl3>().enabled = false;
             }
             else if (Typ[1] == 9)
             {
                 gameObject.AddComponent<FireAttackLvl3>();
+                gameObject.GetComponent<FireAttackLvl3>().enabled = false;
             }
             else if (Typ[2] == 9)
             {
                 gameObject.AddComponent<HealerLvl3>();
+                gameObject.GetComponent<HealerLvl3>().enabled = false;
                 gameObject.AddComponent<FireImmunityLvl3>();
+                gameObject.GetComponent<FireImmunityLvl3>().enabled = false;
             }
             else if (Typ[3] == 9)
             {
                 gameObject.AddComponent<SliWondoAttackLvl3>();
+                gameObject.GetComponent<SliWondoAttackLvl3>().enabled = false;
                 gameObject.AddComponent<SliWondoDefenseLvl3>();
+                gameObject.GetComponent<SliWondoDefenseLvl3>().enabled = false;
             }
             else
             {

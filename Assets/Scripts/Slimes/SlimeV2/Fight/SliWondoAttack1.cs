@@ -7,12 +7,17 @@ public class SliWondoAttack1 : FightCallback
     GameObject target;
     List<GameObject> enemyList = new List<GameObject>();
     private int playerID;
-
     private int delay = 0;
 
     private void Awake()
     {
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+    }
+
+    private void OnEnable()
+    {
+        playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
+        Prepare();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -23,7 +28,10 @@ public class SliWondoAttack1 : FightCallback
             {
                 enemyList.Add(collision.gameObject);
             }
-            if (target == null) { target = enemyList[0]; }
+            if ((target == null || target.activeInHierarchy == false) && enemyList.Count > 0)
+            {
+                target = enemyList[0];
+            }
         }
     }
 
@@ -31,7 +39,7 @@ public class SliWondoAttack1 : FightCallback
     {
         if (enemyList.Contains(collision.gameObject))
         {
-            if (collision.gameObject == target)
+            if (collision.gameObject == target || target.activeInHierarchy == false)
             {
                 target = null;
             }
@@ -47,19 +55,45 @@ public class SliWondoAttack1 : FightCallback
     {
         if (target != null)
         {
-            base.Attack();
-            target.GetComponent<HealthCallback>().GetDMG(modedDMG);
-            delay--;
-            if (delay == 0)
+            if (!target.activeInHierarchy)
             {
-                foreach(Collider k in Physics.OverlapBox(transform.position+(target.transform.position-transform.position).normalized, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(target.transform.position - transform.position)))
+                target = null;
+                enemyList.Remove(target);
+                if (enemyList.Count > 0)
                 {
-                    if (k.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
+                    target = enemyList[0];
+                    base.Attack();
+                    target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+                    delay--;
+                    if (delay == 0)
                     {
-                        k.GetComponent<Rigidbody>().AddForce((target.transform.position - transform.position).normalized * 2.0f, ForceMode.Impulse);
+                        foreach (Collider k in Physics.OverlapBox(transform.position + (target.transform.position - transform.position).normalized, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(target.transform.position - transform.position)))
+                        {
+                            if (k.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
+                            {
+                                k.GetComponent<Rigidbody>().AddForce((target.transform.position - transform.position).normalized * 2.0f, ForceMode.Impulse);
+                            }
+                        }
+                        delay = 10;
                     }
                 }
-                delay = 10;
+            }
+            else
+            {
+                base.Attack();
+                target.GetComponent<HealthCallback>().GetDMG(modedDMG);
+                delay--;
+                if (delay == 0)
+                {
+                    foreach (Collider k in Physics.OverlapBox(transform.position + (target.transform.position - transform.position).normalized, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(target.transform.position - transform.position)))
+                    {
+                        if (k.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
+                        {
+                            k.GetComponent<Rigidbody>().AddForce((target.transform.position - transform.position).normalized * 2.0f, ForceMode.Impulse);
+                        }
+                    }
+                    delay = 10;
+                }
             }
         }
     }

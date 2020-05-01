@@ -12697,7 +12697,7 @@ MonoBehaviour:
   Info: {fileID: 357544313}
   EQPlayer1: {fileID: 1018766601}
   EQPlayer2: {fileID: 42366762}
-  TureDruation: 10
+  TureDruation: 5
   PauseCanvas: {fileID: 1873370358}
 --- !u!1 &1352123936
 GameObject:
@@ -16510,6 +16510,57 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1841463360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1841463362}
+  - component: {fileID: 1841463361}
+  m_Layer: 0
+  m_Name: SzacowanieWartosciBojowej
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1841463361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841463360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e095179b8385897438f1557b9d9a3510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Crystals:
+  - {fileID: 7646219245236969715, guid: b7276c7163c7d21488368b08b77503d8, type: 3}
+  - {fileID: 2743487243034242208, guid: f03be1842f23f04448912dae963678cc, type: 3}
+  - {fileID: 548708979087328680, guid: 114313b666e8f5741aa02204de6ca8d3, type: 3}
+  - {fileID: 2666670835942024967, guid: 976ce246753289a45bde0df620aff6c4, type: 3}
+  BadanySlime:
+  - {fileID: 2666670835942024967, guid: 976ce246753289a45bde0df620aff6c4, type: 3}
+  BadanaProbka: 100
+--- !u!4 &1841463362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841463360}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9413817, y: -0.28207302, z: -1.0513431}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1859359512
 PrefabInstance:
   m_ObjectHideFlags: 0

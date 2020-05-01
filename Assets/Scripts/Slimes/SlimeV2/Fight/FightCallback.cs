@@ -5,17 +5,22 @@ using UnityEngine;
 public class FightCallback : MonoBehaviour
 {
     protected float baseDMG;
-
     protected float modedDMG;
 
-    
-    private float baseAttackSpeed;
-
+    float baseAttackSpeed;
     float baseReload;
     float modedReload;
     float reload;
 
-    private void OnEnable()
+    private void Awake()
+    {
+        foreach(FightCallback k in GetComponents<FightCallback>())
+        {
+            if(k!=this) { Destroy(k); }
+        }
+    }
+
+    protected void Prepare()
     {
         baseDMG = GetComponent<SlimeLevelsV2>().Attack;
         modedDMG = baseDMG;

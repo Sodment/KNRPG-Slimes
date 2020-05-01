@@ -319,8 +319,8 @@ GameObject:
   - component: {fileID: 8135897595075824362}
   - component: {fileID: 80938255857431381}
   - component: {fileID: 134343537702614583}
-  - component: {fileID: 2821392283724583807}
   - component: {fileID: 8354118527951804}
+  - component: {fileID: 5661086693329266950}
   m_Layer: 0
   m_Name: SlimeV2
   m_TagString: Slime
@@ -401,6 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 0
+  currentState: 0
   healthCanvas: {fileID: 7467921259575614598}
   healthBar: {fileID: 1669499382748704932}
 --- !u!114 &80938255857431381
@@ -427,18 +428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b2bdd2c0404db4bac719dce6a948a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2821392283724583807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5318391285339011073}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f1f0234035fc046a91282f7143e2bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8354118527951804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +438,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cb312d52312ac44ba39ebece68ba729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5661086693329266950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318391285339011073}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a007d720bba74164b86cc2544ab66582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6446967902602722715
