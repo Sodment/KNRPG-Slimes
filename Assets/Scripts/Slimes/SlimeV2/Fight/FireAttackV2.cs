@@ -8,8 +8,9 @@ public class FireAttackV2 : FightCallback
     List<GameObject> enemyList = new List<GameObject>();
     private int playerID;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
     }
 
@@ -56,8 +57,8 @@ public class FireAttackV2 : FightCallback
         {
             if (!target.activeInHierarchy)
             {
-                target = null;
                 enemyList.Remove(target);
+                target = null;
                 if (enemyList.Count > 0)
                 {
                     target = enemyList[0];
@@ -65,6 +66,7 @@ public class FireAttackV2 : FightCallback
                     target.GetComponent<HealthCallback>().GetDMG(modedDMG);
                     if (target.GetComponent<FireImmunity>() == null || target.GetComponent<FireImmunityLvl3>() == null)
                     {
+                        Debug.Log("Podpalenie");
                         target.AddComponent<IgniteV2>();
                         target.GetComponent<IgniteV2>().Prepare(1.0f);
                     }
@@ -76,8 +78,9 @@ public class FireAttackV2 : FightCallback
                 target.GetComponent<HealthCallback>().GetDMG(modedDMG);
                 if (target.GetComponent<FireImmunity>() == null || target.GetComponent<FireImmunityLvl3>() == null)
                 {
+                    Debug.Log("Podpalenie");
                     target.AddComponent<IgniteV2>();
-                    target.GetComponent<IgniteV2>().Prepare(1.0f);
+                    target.GetComponent<IgniteV2>().Prepare(5.0f);
                 }
             }
         }

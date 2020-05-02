@@ -70,8 +70,8 @@ public class SlimeLevelsV2 : MonoBehaviour
         {
             if (Typ[0] == 3)
             {
-                gameObject.AddComponent<Shild>();
-                gameObject.GetComponent<Shild>().enabled = false;
+                gameObject.AddComponent<ShildLvl1>();
+                gameObject.GetComponent<ShildLvl1>().enabled = false;
             }
             else if (Typ[1] == 3)
             {
@@ -93,10 +93,10 @@ public class SlimeLevelsV2 : MonoBehaviour
                 int rand = Random.Range(0, 4);
                 switch (rand)
                 {
-                    case 0: { gameObject.AddComponent<Shild>();         gameObject.GetComponent<Shild>().enabled = false; break; }
-                    case 1: { gameObject.AddComponent<FireAttackV2>();  gameObject.GetComponent<FireAttackV2>().enabled = false; break; }
-                    case 2: { gameObject.AddComponent<FireImmunity>();  gameObject.GetComponent<FireImmunity>().enabled = false; break; }
-                    case 3: { gameObject.AddComponent<Atletyka>();      gameObject.GetComponent<Atletyka>().enabled = false; break; }
+                    case 0: { gameObject.AddComponent<Shild>();         gameObject.GetComponent<Shild>().enabled = false;           break; }
+                    case 1: { gameObject.AddComponent<FireAttackV2>();  gameObject.GetComponent<FireAttackV2>().enabled = false;    break; }
+                    case 2: { gameObject.AddComponent<FireImmunity>();  gameObject.GetComponent<FireImmunity>().enabled = false;    break; }
+                    case 3: { gameObject.AddComponent<Atletyka>();      gameObject.GetComponent<Atletyka>().enabled = false;        break; }
                 }
             }
         }

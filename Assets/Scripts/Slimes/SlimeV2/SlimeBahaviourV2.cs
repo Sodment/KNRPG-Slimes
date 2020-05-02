@@ -15,7 +15,7 @@ public class SlimeBahaviourV2 : MonoBehaviour
     private FightCallback fightScript;
     private PrepareCallback prepareScript;
     private MovmentCallback movmentsScript;
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
 
     public GameObject healthCanvas;
     public Image healthBar;
@@ -26,7 +26,7 @@ public class SlimeBahaviourV2 : MonoBehaviour
         fightScript = GetComponent<FightCallback>();
         prepareScript = GetComponent<PrepareCallback>();
         movmentsScript = GetComponent<MovmentCallback>();
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 
         ChangeState(State.Prepare);
     }
@@ -47,7 +47,7 @@ public class SlimeBahaviourV2 : MonoBehaviour
                     fightScript.enabled = false;
                     movmentsScript.enabled = false;
                     healthScript.enabled = false;
-                    rigidbody.isKinematic = true;
+                    rb.isKinematic = true;
                     break; 
                 }
             case State.Fight:
@@ -60,7 +60,7 @@ public class SlimeBahaviourV2 : MonoBehaviour
                     fightScript.enabled = true;
                     movmentsScript.enabled = true;
                     healthScript.enabled = true;
-                    rigidbody.isKinematic = false;
+                    rb.isKinematic = false;
                     break;
                 }
             case State.Stun:
@@ -69,7 +69,7 @@ public class SlimeBahaviourV2 : MonoBehaviour
                     fightScript.enabled = false;
                     movmentsScript.enabled = false;
                     healthScript.enabled = true;
-                    rigidbody.isKinematic = false;
+                    rb.isKinematic = false;
                     break;
                 }
             case State.Die:
@@ -78,7 +78,7 @@ public class SlimeBahaviourV2 : MonoBehaviour
                     fightScript.enabled = false;
                     movmentsScript.enabled = false;
                     healthScript.enabled = false;
-                    rigidbody.isKinematic = true;
+                    rb.isKinematic = true;
                     healthBar.fillAmount = 1;
                     healthCanvas.SetActive(false);
                     gameObject.SetActive(false);

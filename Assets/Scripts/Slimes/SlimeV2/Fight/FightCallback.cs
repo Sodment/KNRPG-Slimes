@@ -12,7 +12,7 @@ public class FightCallback : MonoBehaviour
     float modedReload;
     float reload;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         foreach(FightCallback k in GetComponents<FightCallback>())
         {

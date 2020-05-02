@@ -36,6 +36,9 @@ public class ShildLvl2 : HealthCallback
     {
         if (used) return;
 
+        GameObject GO = (GameObject)Instantiate(Resources.Load("VisualEffects/Pomf", typeof(GameObject)), transform.position, Quaternion.Euler(-90,0,0));
+        Destroy(GO, 1.0f);
+
         foreach(Collider k in Physics.OverlapSphere(transform.position, 2.5f))
         {
             if (k.GetComponent<SlimeBahaviourV2>() == null) continue;

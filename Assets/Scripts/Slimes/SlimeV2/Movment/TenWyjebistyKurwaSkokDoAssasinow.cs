@@ -9,13 +9,13 @@ public class TenWyjebistyKurwaSkokDoAssasinow : MovmentCallback
 
     List<SlimeBahaviourV2> enemyList = new List<SlimeBahaviourV2>();
 
-    Rigidbody rigidbody;
+    Rigidbody rb;
 
     bool jump = true;
 
     private void OnEnable()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         int myID = GetComponent<SlimeBahaviourV2>().PlayerID;
         enemyList.Clear();
         foreach (SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
@@ -51,7 +51,7 @@ public class TenWyjebistyKurwaSkokDoAssasinow : MovmentCallback
         }
 
         Vector3 root = Vector3.Cross((Target - transform.position * 2), ToCross);
-        rigidbody.AddTorque(root * (0.5f + Mathf.Pow(MinimumDistance, 1.7f)) * currentSpeed, ForceMode.Force);
+        rb.AddTorque(root * (0.5f + Mathf.Pow(MinimumDistance, 1.7f)) * currentSpeed, ForceMode.Force);
     }
 
     void HyperJump()
@@ -61,10 +61,7 @@ public class TenWyjebistyKurwaSkokDoAssasinow : MovmentCallback
         float v = 100.0f;
         float alpha = Mathf.PI * 0.5f + Mathf.Asin(g * Dist / v) * 0.5f;
 
-        Debug.Log(alpha);
-        Debug.DrawLine(transform.position, transform.position + new Vector3(0, Mathf.Sin(alpha), Mathf.Cos(alpha) * (Mathf.Sign(transform.position.z))), Color.green, 30);
-
-        rigidbody.AddForce(new Vector3(0, Mathf.Sin(alpha), Mathf.Cos(alpha) * (Mathf.Sign(transform.position.z))) * 10.0f, ForceMode.Impulse);
+        rb.AddForce(new Vector3(0, Mathf.Sin(alpha), Mathf.Cos(alpha) * (Mathf.Sign(transform.position.z))) * 10.0f, ForceMode.Impulse);
 
         jump = false;
     

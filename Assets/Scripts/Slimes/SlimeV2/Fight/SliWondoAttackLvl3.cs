@@ -9,8 +9,9 @@ public class SliWondoAttackLvl3 : FightCallback
     private int playerID;
     private int delay = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
     }
 
@@ -57,8 +58,8 @@ public class SliWondoAttackLvl3 : FightCallback
         {
             if (!target.activeInHierarchy)
             {
-                target = null;
                 enemyList.Remove(target);
+                target = null;
                 if (enemyList.Count > 0)
                 {
                     target = enemyList[0];
@@ -67,14 +68,17 @@ public class SliWondoAttackLvl3 : FightCallback
                     delay--;
                     if (delay == 0)
                     {
-                        foreach (Collider k in Physics.OverlapBox(transform.position + (target.transform.position - transform.position).normalized, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(target.transform.position - transform.position)))
+                        delay = 10;
+                        Vector3 dir = (target.transform.position - transform.position).normalized;
+                        GameObject GO = (GameObject)Instantiate(Resources.Load("VisualEffects/Wind", typeof(GameObject)), transform.position, Quaternion.LookRotation(dir, Vector3.up));
+                        Destroy(GO, 1.0f);
+                        foreach (Collider k in Physics.OverlapBox(transform.position + dir, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(dir, Vector3.up)))
                         {
                             if (k.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
                             {
-                                k.GetComponent<Rigidbody>().AddForce((target.transform.position - transform.position).normalized * 4.0f, ForceMode.Impulse);
+                                k.GetComponent<Rigidbody>().AddForce(dir * 10.0f, ForceMode.Impulse);
                             }
                         }
-                        delay = 5;
                     }
                 }
             }
@@ -85,14 +89,17 @@ public class SliWondoAttackLvl3 : FightCallback
                 delay--;
                 if (delay == 0)
                 {
-                    foreach (Collider k in Physics.OverlapBox(transform.position + (target.transform.position - transform.position).normalized, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(target.transform.position - transform.position)))
+                    delay = 10;
+                    Vector3 dir = (target.transform.position - transform.position).normalized;
+                    GameObject GO = (GameObject)Instantiate(Resources.Load("VisualEffects/Wind", typeof(GameObject)), transform.position, Quaternion.LookRotation(dir, Vector3.up));
+                    Destroy(GO, 1.0f);
+                    foreach (Collider k in Physics.OverlapBox(transform.position + dir, new Vector3(0.4f, 0.4f, 1), Quaternion.LookRotation(dir, Vector3.up)))
                     {
                         if (k.GetComponent<SlimeBahaviourV2>().PlayerID != playerID)
                         {
-                            k.GetComponent<Rigidbody>().AddForce((target.transform.position - transform.position).normalized * 4.0f, ForceMode.Impulse);
+                            k.GetComponent<Rigidbody>().AddForce(dir * 10.0f, ForceMode.Impulse);
                         }
                     }
-                    delay = 5;
                 }
             }
         }

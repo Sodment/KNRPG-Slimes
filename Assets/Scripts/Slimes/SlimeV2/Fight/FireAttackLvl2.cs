@@ -8,8 +8,9 @@ public class FireAttackLvl2 : FightCallback
     List<GameObject> enemyList = new List<GameObject>();
     private int playerID;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
     }
 
@@ -58,14 +59,15 @@ public class FireAttackLvl2 : FightCallback
         {
             if (!target.activeInHierarchy)
             {
-                target = null;
                 enemyList.Remove(target);
+                target = null;
                 if (enemyList.Count > 0)
                 {
                     target = enemyList[0];
                     base.Attack();
                     foreach (Collider k in Physics.OverlapSphere(target.transform.position, 1.5f))
                     {
+                        if (k.gameObject.GetComponent<SlimeBahaviourV2>() == null) continue;
                         if (k.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID == playerID) continue;
                         else
                         {
@@ -88,6 +90,7 @@ public class FireAttackLvl2 : FightCallback
                 base.Attack();
                 foreach (Collider k in Physics.OverlapSphere(target.transform.position, 1.5f))
                 {
+                    if (k.gameObject.GetComponent<SlimeBahaviourV2>() == null) continue;
                     if (k.gameObject.GetComponent<SlimeBahaviourV2>().PlayerID == playerID) continue;
                     else
                     {

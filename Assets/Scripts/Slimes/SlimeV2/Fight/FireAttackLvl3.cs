@@ -8,8 +8,9 @@ public class FireAttackLvl3 : FightCallback
     List<GameObject> enemyList = new List<GameObject>();
     private int playerID;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerID = GetComponent<SlimeBahaviourV2>().PlayerID;
     }
 
@@ -58,8 +59,8 @@ public class FireAttackLvl3 : FightCallback
         {
             if (!target.activeInHierarchy)
             {
-                target = null;
                 enemyList.Remove(target);
+                target = null;
                 if (enemyList.Count > 0)
                 {
                     target = enemyList[0];

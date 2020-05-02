@@ -12697,7 +12697,7 @@ MonoBehaviour:
   Info: {fileID: 357544313}
   EQPlayer1: {fileID: 1018766601}
   EQPlayer2: {fileID: 42366762}
-  TureDruation: 5
+  TureDruation: 20
   PauseCanvas: {fileID: 1873370358}
 --- !u!1 &1352123936
 GameObject:

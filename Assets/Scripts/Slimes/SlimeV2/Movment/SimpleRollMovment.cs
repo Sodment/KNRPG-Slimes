@@ -9,11 +9,11 @@ public class SimpleRollMovment : MovmentCallback
 
     List<SlimeBahaviourV2> enemyList = new List<SlimeBahaviourV2>();
 
-    Rigidbody rigidbody;
+    Rigidbody rb;
 
     private void OnEnable()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         int myID = GetComponent<SlimeBahaviourV2>().PlayerID;
         enemyList.Clear();
         foreach(SlimeBahaviourV2 k in GameObject.FindObjectsOfType<SlimeBahaviourV2>())
@@ -44,6 +44,6 @@ public class SimpleRollMovment : MovmentCallback
         }
 
         Vector3 root = Vector3.Cross((Target - transform.position*2), ToCross);
-        rigidbody.AddTorque(root * (0.5f + Mathf.Pow(MinimumDistance, 1.7f)) * currentSpeed, ForceMode.Force);
+        rb.AddTorque(root * (0.5f + Mathf.Pow(MinimumDistance, 1.7f)) * currentSpeed, ForceMode.Force);
     }
 }
